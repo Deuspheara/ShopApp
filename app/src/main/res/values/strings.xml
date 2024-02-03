@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Eshopapp</string>
+    <string name="home_title">Home</string>
+    <string name="sign_up_title">Create an account</string>
+    <string name="sign_in_title">Login</string>
+    <string name="cd_menu">Menu icon</string>
+    <string name="cd_shopping_cart">Shopping cart icon</string>
+    <string name="back">Back</string>
+    <string name="clear">Clear</string>
+    <string name="search">Search for product…</string>
+    <string name="category_sport">Sport</string>
+    <string name="cd_favorite">Favorite icon</string>
+    <string name="new_arrivals">New arrivals</string>
+    <string name="cd_arrow_right">Arrow right Icon</string>
+    <string name="continue_shopping">Continue your purchase</string>
+    <string name="cd_arrow_up">Arrow Up icon</string>
+    <string name="product_detail_title">Product</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="password_requirement">Password should have 1 symbol, 1 capital letter, 8 characters</string>
+    <string name="cd_user">user icon</string>
+    <string name="auth_title">Authentication</string>
+</resources>

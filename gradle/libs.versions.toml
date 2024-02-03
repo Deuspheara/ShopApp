@@ -1,0 +1,100 @@
+[versions]
+agp = "8.4.0-alpha06"
+google-ksp = "1.9.21-1.0.15"
+kotlin = "1.9.21"
+core-ktx = "1.12.0"
+junit = "4.13.2"
+androidx-test-ext-junit = "1.1.5"
+espresso-core = "3.5.1"
+lifecycle-runtime-ktx = "2.7.0"
+activity-compose = "1.8.2"
+compose-compiler = "1.5.3"
+compose-ui-test = "1.6.0"
+compose-bom = "2024.01.00"
+coil = "2.4.0"
+# Hilt version
+dagger-hilt = "2.48"
+dagger-hilt-navigation = "1.1.0"
+leak-canary = "2.12"
+navigationCompose = "2.7.6"
+material3WindowSizeClass = "1.1.2"
+lifecycleRuntimeCompose = "2.7.0"
+retrofit-version = "2.9.0"
+okhttp-version = "5.0.0-alpha.11"
+pagingCommonKtx = "3.2.1"
+pagingCommonAndroid = "3.3.0-alpha02"
+recyclerview = "1.3.2"
+androidx-paging-runtime-version = "3.2.1"
+androidx-paging-compose-version = "3.2.1"
+material3 = "1.2.0-rc01"
+room = "2.6.1"
+
+[libraries]
+leak-canary = { group = "com.squareup.leakcanary", name = "leakcanary-android", version.ref = "leak-canary" }
+core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
+ui = { group = "androidx.compose.ui", name = "ui" }
+ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
+compose-material = { module = "androidx.compose.material3:material3", version.ref = "material3" }
+compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose-bom" }
+compose-activity = { module = "androidx.activity:activity-compose" }
+compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+compose-animation-graphics = { module = "androidx.compose.animation:animation-graphics" }
+compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+compose-ui-test = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose-ui-test" }
+compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
+compose-coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+androidx-compose-materialWindow = { module = "androidx.compose.material3:material3-window-size-class" }
+
+# Hilt
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "dagger-hilt" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "dagger-hilt" }
+hilt-navigation = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "dagger-hilt-navigation" }
+hilt-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "dagger-hilt" }
+androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycleRuntimeCompose" }
+
+# Retrofit
+squareup-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit-version" }
+squareup-converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit-version" }
+squareup-logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp-version" }
+squareup-mockwebserver = { module = "com.squareup.okhttp3:mockwebserver", version.ref = "okhttp-version" }
+androidx-paging-common-ktx = { group = "androidx.paging", name = "paging-common-ktx", version.ref = "pagingCommonKtx" }
+androidx-paging-common-android = { group = "androidx.paging", name = "paging-common-android", version.ref = "pagingCommonAndroid" }
+androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
+
+# Paging
+androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "androidx-paging-runtime-version" }
+androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "androidx-paging-compose-version" }
+
+# Room
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+room-testing = { module = "androidx.room:room-testing", version.ref = "room" }
+
+
+[bundles]
+hilt = ["hilt-android", "hilt-compiler", "hilt-navigation"]
+compose = ["compose-material", "compose-ui-tooling-preview", "compose-activity", "compose-navigation", "compose-animation-graphics", "compose-coil"]
+compose-debug = ["compose-ui-tooling", "compose-ui-test-manifest"]
+compose-test = ["compose-ui-test"]
+networking = ["squareup-retrofit", "squareup-converter-gson", "squareup-logging-interceptor"]
+paging = ["androidx-paging-runtime", "androidx-paging-compose"]
+room = ["room-runtime", "room-ktx"]
+room-test = ["room-testing"]
+
+[plugins]
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-kapt = { id = 'org.jetbrains.kotlin.kapt', version.ref = "kotlin" }
+google-ksp = { id = 'com.google.devtools.ksp', version.ref = "google-ksp" }
+dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger-hilt" }
