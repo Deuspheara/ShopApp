@@ -3,6 +3,7 @@ package fr.deuspheara.eshopapp.data.datasource.shop.remote
 import androidx.paging.PagingSource
 import fr.deuspheara.eshopapp.data.network.model.ResponseContainer
 import fr.deuspheara.eshopapp.data.network.model.shop.ProductRemote
+import retrofit2.Response
 
 /**
  * _Eshopapp_
@@ -34,7 +35,7 @@ interface ShopDataSource {
         category: String?,
     ): PagingSource<Int, ProductRemote>
 
-    suspend fun getCategories()
+    suspend fun getCategories() : ResponseContainer<String>
 
     suspend fun getCart()
 

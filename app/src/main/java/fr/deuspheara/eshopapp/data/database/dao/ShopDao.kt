@@ -1,11 +1,14 @@
 package fr.deuspheara.eshopapp.data.database.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
+import fr.deuspheara.eshopapp.data.database.model.ItemCartEntity
+import fr.deuspheara.eshopapp.data.database.model.ItemCartWithProduct
 import fr.deuspheara.eshopapp.data.database.model.ProductEntity
 import fr.deuspheara.eshopapp.data.database.model.ProductWithSpecifications
 import fr.deuspheara.eshopapp.data.database.model.SpecificationEntity
@@ -68,5 +71,23 @@ interface ShopDao {
 
     @Update
     suspend fun updateProducts(products: List<ProductEntity>)
+
+    //Item cart
+    @Query("SELECT * FROM cart")
+    fun getCart(): List<ItemCartWithProduct>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertItemCart(itemCart: ItemCartEntity): Long
+
+    @Query("DELETE FROM cart")
+    suspend fun deleteAllItemCart(): Int
+
+    @Query("SELECT * FROM cart WHERE product_id = :id")
+    fun getCartItemById(id: String): ItemCartEntity?
+    @Query("UPDATE cart SET quantity = :quantity WHERE product_id = :id")
+    suspend fun updateItemCartQuantity(id: String, quantity: Int)
+
+    @Query("DELETE FROM cart WHERE product_id = :id")
+    suspend fun deleteItemCartById(id: String): Int
 
 }

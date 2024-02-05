@@ -4,19 +4,18 @@ import android.util.Log
 import androidx.paging.PagingSource
 import com.google.gson.Gson
 import fr.deuspheara.eshopapp.core.coroutines.DispatcherModule
-import fr.deuspheara.eshopapp.core.model.products.Identifier
+import fr.deuspheara.eshopapp.data.database.model.ItemCartEntity
+import fr.deuspheara.eshopapp.data.database.model.ItemCartWithProduct
 import fr.deuspheara.eshopapp.data.database.model.ProductEntity
 import fr.deuspheara.eshopapp.data.database.model.ProductWithSpecifications
 import fr.deuspheara.eshopapp.data.database.model.SpecificationEntity
 import fr.deuspheara.eshopapp.data.database.room.ShopDatabase
 import fr.deuspheara.eshopapp.data.datasource.shop.remote.ProductResponse
-import fr.deuspheara.eshopapp.data.network.NetworkModule.apiCall
-import fr.deuspheara.eshopapp.data.network.model.ResponseContainer
 import fr.deuspheara.eshopapp.data.network.model.shop.Specification
 import fr.deuspheara.eshopapp.data.network.paging.ApiLocalPagingSource
-import fr.deuspheara.eshopapp.data.network.paging.ApiPagingSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import java.time.Instant
 import javax.inject.Inject
 
 /**
@@ -110,6 +109,74 @@ class ShopLocalDataSourceImpl @Inject constructor(
 
     override suspend fun deleteProductById(id: String) {
         TODO("Not yet implemented")
+    }
+
+    override suspend fun getCartProducts(): List<ItemCartWithProduct> {
+        return withContext(ioDispatcher) {
+            try {
+                database.shopDao.getCart()
+            } catch (e: Exception) {
+                Log.e(TAG, "Error while getting cart products", e)
+                throw e
+            }
+        }
+    }
+
+    override suspend fun incrementCartItemQuantityById(id: String): Int {
+        return withContext(ioDispatcher) {
+            try {
+                val cartItem = database.shopDao.getCartItemById(id)
+                Log.d(TAG, "incrementCartItemQuantityById: $id, cartItem: $cartItem")
+                if(cartItem == null) {
+                    database.shopDao.insertItemCart(ItemCartEntity(productId = id, quantity = 1))
+                } else {
+                    database.shopDao.updateItemCartQuantity(id, cartItem.quantity + 1)
+                }
+
+                database.shopDao.getCartItemById(id)?.quantity ?: 0
+            } catch (e: Exception) {
+                Log.e(TAG, "Error while adding to cart: $id", e)
+                throw e
+            }
+        }
+    }
+
+
+    override suspend fun decrementCartItemQuantityById(id: String): Int {
+        return withContext(ioDispatcher) {
+            try {
+                database.shopDao.deleteItemCartById(id)
+
+                database.shopDao.getCartItemById(id)?.quantity ?: 0
+            } catch (e: Exception) {
+                Log.e(TAG, "Error while removing from cart: $id", e)
+                throw e
+            }
+        }
+    }
+
+    override suspend fun deleteCartItemById(id: String): Instant {
+        return withContext(ioDispatcher) {
+            try {
+                database.shopDao.deleteItemCartById(id)
+
+                Instant.now()
+            } catch (e: Exception) {
+                Log.e(TAG, "Error while deleting from cart: $id", e)
+                throw e
+            }
+        }
+    }
+
+    override suspend fun getCartItemById(id: String): ItemCartEntity? {
+        return withContext(ioDispatcher) {
+            try {
+                database.shopDao.getCartItemById(id)
+            } catch (e: Exception) {
+                Log.e(TAG, "Error while getting cart item by id: $id", e)
+                throw e
+            }
+        }
     }
 
     private fun Specification.toSpecificationEntity(productId: String): SpecificationEntity {

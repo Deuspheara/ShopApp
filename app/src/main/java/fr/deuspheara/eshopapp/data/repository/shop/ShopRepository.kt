@@ -1,6 +1,8 @@
 package fr.deuspheara.eshopapp.data.repository.shop
 
 import androidx.paging.PagingData
+import fr.deuspheara.eshopapp.core.model.products.ProductCartInfoModel
+import fr.deuspheara.eshopapp.core.model.products.ProductCartModel
 import fr.deuspheara.eshopapp.core.model.products.ProductFullModel
 import fr.deuspheara.eshopapp.core.model.products.ProductLightModel
 import kotlinx.coroutines.flow.Flow
@@ -33,13 +35,15 @@ interface ShopRepository {
 
     suspend fun getProductByIds(vararg ids: String): List<ProductFullModel>?
 
-    suspend fun getCategories()
+    suspend fun getCategories(): List<String>
 
-    suspend fun getCart()
+    suspend fun getCart() : List<ProductCartModel>
 
-    suspend fun addToCart(productId: String)
+    suspend fun incrementCartItemQuantityById(itemId: String): Int
 
-    suspend fun removeFromCart(productId: String)
+    suspend fun decrementCartItemQuantityById(itemId: String): Int
+
+    suspend fun getCartItemById(itemId: String): ProductCartInfoModel?
 
     suspend fun getOrders()
 

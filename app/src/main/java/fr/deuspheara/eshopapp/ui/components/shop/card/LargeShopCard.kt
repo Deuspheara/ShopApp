@@ -33,6 +33,7 @@ import fr.deuspheara.eshopapp.core.model.products.Description
 import fr.deuspheara.eshopapp.core.model.products.ImageUrl
 import fr.deuspheara.eshopapp.core.model.products.Name
 import fr.deuspheara.eshopapp.core.model.products.Price
+import java.util.Currency
 
 /**
  * _Eshopapp_
@@ -89,24 +90,20 @@ fun LargeShopCard(
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
             )
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp)
-                    .height(24.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                Text(
-                    text = price?.value.toString() + price?.currency,
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                Text(
-                    text = promotion?.value.toString() + promotion?.currency,
-                    style = MaterialTheme.typography.bodyLarge + TextStyle(textDecoration = TextDecoration.LineThrough),
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-                )
-            }
+
+            Text(
+                modifier = Modifier.padding(top = 8.dp),
+                text = price?.value.toString() + Currency.getInstance(price?.currency).symbol,
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+
+            Text(
+                text = promotion?.value.toString() + Currency.getInstance(promotion?.currency).symbol,
+                style = MaterialTheme.typography.bodyLarge + TextStyle(textDecoration = TextDecoration.LineThrough),
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+            )
+
             Spacer(modifier = Modifier.weight(1f))
 
             Row(
@@ -148,7 +145,8 @@ fun LargeShopCard(
             modifier = Modifier
                 .clip(MaterialTheme.shapes.medium)
                 .fillMaxHeight()
-                .weight(1.5f),
+                .weight(1.5f)
+                .padding(start = 4.dp),
             model = imageUrl.value,
             contentDescription = null,
             contentScale = ContentScale.Crop,

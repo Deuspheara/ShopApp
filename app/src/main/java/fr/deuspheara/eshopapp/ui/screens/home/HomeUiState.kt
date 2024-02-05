@@ -1,6 +1,7 @@
 package fr.deuspheara.eshopapp.ui.screens.home
 
 import androidx.paging.PagingData
+import fr.deuspheara.eshopapp.core.model.products.Category
 import fr.deuspheara.eshopapp.core.model.products.ProductLightModel
 
 /**
@@ -31,5 +32,8 @@ sealed interface HomeUiState {
 
     @JvmInline
     value class Authenticated(val isAuthenticated: Boolean) : HomeUiState
+
+    @JvmInline
+    value class Categories(val categories: List<Category>) : HomeUiState
 
 }

@@ -3,6 +3,7 @@ package fr.deuspheara.eshopapp.ui.theme
 import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -46,6 +47,12 @@ private val DarkColorScheme = lightColorScheme(
     onError = Color.White
 
 )
+
+val ColorScheme.customGreen: Color
+    @Composable get() = if (!isSystemInDarkTheme()) Green600 else Green200
+
+val ColorScheme.customRed: Color
+    @Composable get() = RedCrayola
 
 @Composable
 fun ShopAppTheme(

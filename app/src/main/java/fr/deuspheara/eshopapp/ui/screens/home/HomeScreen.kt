@@ -6,13 +6,13 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
@@ -93,6 +93,7 @@ fun HomeScreen(
 
     val isLoading by remember { derivedStateOf { (uiState as? HomeUiState.Loading)?.isLoading == true } }
     val isAuthenticated by remember { derivedStateOf { (uiState as? HomeUiState.Authenticated)?.isAuthenticated == true } }
+    val categories by remember { derivedStateOf { (uiState as? HomeUiState.Categories)?.categories ?: emptyList() } }
 
     val filteredProducts = viewModel.filteredProducts.collectAsLazyPagingItems()
 
@@ -164,8 +165,7 @@ fun HomeScreen(
         Column(
             modifier = Modifier
                 .padding(innerPadding),
-
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.Top
         ) {
             ShopAppSearchBar(
                 modifier = Modifier
@@ -180,10 +180,7 @@ fun HomeScreen(
                 focused = isSearchBarFocused,
                 focusedValue = { isSearchBarFocused = it },
             ) {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                ) {
+                LazyColumn {
                     items(
                         count = filteredProducts.itemCount,
                         key = filteredProducts.itemKey { it.id },
@@ -205,10 +202,12 @@ fun HomeScreen(
             Column(
                 modifier = Modifier
                     .nestedScroll(scrollBehavior.nestedScrollConnection)
-                    .verticalScroll(rememberScrollState()),
+                    .verticalScroll(rememberScrollState())
+                    .padding(top = 16.dp),
+                verticalArrangement = Arrangement.Top
             ) {
                 LazyRow {
-                    items(10) {
+                    items(categories) { category ->
                         TextButton(
                             modifier = Modifier
                                 .padding(start = 16.dp),
@@ -221,7 +220,7 @@ fun HomeScreen(
                                 disabledContentColor = MaterialTheme.colorScheme.onSurface,
                             ),
                         ) {
-                            Text(stringResource(R.string.category_sport))
+                            Text(text = category.value)
                         }
                     }
                 }
@@ -256,7 +255,7 @@ fun HomeScreen(
                 }
 
                 ShopSection(
-                    title = R.string.category_sport,
+                    title = R.string.category_computer,
                     onClick = {},
                 )
 

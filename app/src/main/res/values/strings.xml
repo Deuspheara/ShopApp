@@ -20,4 +20,6 @@
     <string name="password_requirement">Password should have 1 symbol, 1 capital letter, 8 characters</string>
     <string name="cd_user">user icon</string>
     <string name="auth_title">Authentication</string>
+    <string name="add_to_cart">Add to cart</string>
+    <string name="category_computer">Computer</string>
 </resources>

@@ -8,8 +8,10 @@ import androidx.paging.cachedIn
 import androidx.paging.filter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import fr.deuspheara.eshopapp.core.model.auth.Token
+import fr.deuspheara.eshopapp.core.model.products.Category
 import fr.deuspheara.eshopapp.core.model.products.ProductLightModel
 import fr.deuspheara.eshopapp.domain.usecases.auth.AuthenticateUseCase
+import fr.deuspheara.eshopapp.domain.usecases.shop.GetCategoriesUseCase
 import fr.deuspheara.eshopapp.domain.usecases.shop.GetProductsUseCase
 import fr.deuspheara.eshopapp.domain.usecases.shop.GetRecentLocalProductsUseCase
 import kotlinx.coroutines.flow.Flow
@@ -42,6 +44,7 @@ class HomeViewModel @Inject constructor(
     getProductUseCase: GetProductsUseCase,
     private val authenticateUseCase: AuthenticateUseCase,
     private val getRecentLocalProductsUseCase: GetRecentLocalProductsUseCase,
+    private val getCategoriesUseCase: GetCategoriesUseCase
 ) : ViewModel() {
     private companion object {
         const val TAG = "HomeViewModel"
@@ -54,7 +57,7 @@ class HomeViewModel @Inject constructor(
     val searchText: StateFlow<HomeUiState.SearchText> = _searchText.asStateFlow()
 
     val allProducts: Flow<PagingData<ProductLightModel>> =
-        getProductUseCase(category = "Montre").cachedIn(viewModelScope)
+        getProductUseCase(category = "Computers").cachedIn(viewModelScope)
 
     val recentLocalProducts: Flow<PagingData<ProductLightModel>> =
         getRecentLocalProductsUseCase().cachedIn(viewModelScope)
@@ -79,6 +82,7 @@ class HomeViewModel @Inject constructor(
 
     init {
         authenticate()
+        fetchCategories()
     }
 
     fun fetchSearchProducts(s: String) {
@@ -97,6 +101,17 @@ class HomeViewModel @Inject constructor(
                     "isAuthenticated: ${if (isAuthenticated) "user is authenticated" else "user is not authenticated"}"
                 )
                 HomeUiState.Authenticated(isAuthenticated)
+            }.catch { e ->
+                emit(HomeUiState.Error(e.message ?: "Unknown error"))
+            }.let {
+                _uiState.emitAll(it)
+            }
+    }
+
+    private fun fetchCategories() = viewModelScope.launch {
+        getCategoriesUseCase()
+            .map<List<Category>, HomeUiState> { categories ->
+                HomeUiState.Categories(categories)
             }.catch { e ->
                 emit(HomeUiState.Error(e.message ?: "Unknown error"))
             }.let {

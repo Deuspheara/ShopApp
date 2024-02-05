@@ -61,8 +61,9 @@ class ApiLocalPagingSource<T : Any>(
         return try {
             val pageNumber = params.key ?: FIRST_PAGE_INDEX
             val response = withContext(dispatcher) {
+                Log.d(TAG, "load: page: $pageNumber, size: 10")
                 apiCall(
-                    pageNumber,
+                    (pageNumber * 10) + 1,
                     10
                 )
             }
@@ -70,7 +71,7 @@ class ApiLocalPagingSource<T : Any>(
             LoadResult.Page(
                 data = response,
                 prevKey = if (pageNumber == FIRST_PAGE_INDEX) null else pageNumber - 1,
-                nextKey = pageNumber + 1
+                nextKey = if (response.isEmpty()) null else pageNumber + 1
             )
         } catch (e: Exception) {
             LoadResult.Error(e)

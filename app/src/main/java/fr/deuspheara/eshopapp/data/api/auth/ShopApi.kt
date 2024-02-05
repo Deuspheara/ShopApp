@@ -31,4 +31,8 @@ interface ShopApi {
         @Query("size")
         size: Int? = null
     ): Response<ResponseContainer<ProductRemote>>
+
+
+    @GET("categories")
+    suspend fun getCategories(): Response<ResponseContainer<String>>
 }
