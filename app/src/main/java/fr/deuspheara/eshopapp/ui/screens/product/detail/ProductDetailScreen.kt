@@ -1,12 +1,9 @@
 package fr.deuspheara.eshopapp.ui.screens.product.detail
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,6 +16,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -32,8 +31,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
@@ -56,6 +57,7 @@ import fr.deuspheara.eshopapp.core.model.products.ReviewsCount
 import fr.deuspheara.eshopapp.core.model.products.StockQuantity
 import fr.deuspheara.eshopapp.data.network.model.shop.Specification
 import fr.deuspheara.eshopapp.ui.components.loader.skeletonLoader
+import fr.deuspheara.eshopapp.ui.theme.customGreen
 import java.util.Currency
 
 /**
@@ -87,6 +89,8 @@ fun ProductDetailScreen(
             (uiState as? ProductDetailUiState.Success)?.product
         }
     }
+
+    val quantity by viewModel.cartQuantity.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {
@@ -132,15 +136,16 @@ fun ProductDetailScreen(
                 }
 
                 is ProductDetailUiState.Success -> {
-                    product?.let { ProductDetailContent(product = it) }
+                    product?.let { ProductDetailContent(product = it, viewModel::addToCart, quantity.value) }
                 }
+
             }
         }
     }
 }
 
 @Composable
-fun ProductDetailContent(product: ProductFullModel) {
+fun ProductDetailContent(product: ProductFullModel, addToCart: () -> Unit = {}, quantity: Int? = null) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -228,6 +233,22 @@ fun ProductDetailContent(product: ProductFullModel) {
 
         item {
             Spacer(modifier = Modifier.height(16.dp))
+        }
+
+        item {
+            Button(
+                onClick = addToCart,
+                modifier = Modifier
+                    .fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = if(quantity == 0) MaterialTheme.colorScheme.customGreen else MaterialTheme.colorScheme.primary
+                )
+            ) {
+                Text(
+                    text = stringResource(id = R.string.add_to_cart),
+                    color = Color.White
+                )
+            }
         }
 
         //TODO: Add reviews

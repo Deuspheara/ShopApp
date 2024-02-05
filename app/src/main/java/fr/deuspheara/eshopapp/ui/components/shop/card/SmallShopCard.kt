@@ -64,7 +64,8 @@ fun SmallShopCard(
     Box(
         modifier = modifier
             .wrapContentHeight()
-            .width(150.dp)
+            .width(180.dp)
+
             .border(
                 width = 1.dp,
                 color = MaterialTheme.colorScheme.outline,

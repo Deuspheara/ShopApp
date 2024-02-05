@@ -7,6 +7,7 @@ import fr.deuspheara.eshopapp.core.coroutines.DispatcherModule
 import fr.deuspheara.eshopapp.data.api.auth.ShopApi
 import fr.deuspheara.eshopapp.data.network.NetworkModule.apiCall
 import fr.deuspheara.eshopapp.data.network.NetworkModule.safeUnwrap
+import fr.deuspheara.eshopapp.data.network.model.ResponseContainer
 import fr.deuspheara.eshopapp.data.network.model.shop.ProductRemote
 import fr.deuspheara.eshopapp.data.network.paging.ApiPagingSource
 import kotlinx.coroutines.CoroutineDispatcher
@@ -84,8 +85,12 @@ class ShopDataSourceImpl @Inject constructor(
         )
     }
 
-    override suspend fun getCategories() {
-        TODO("Not yet implemented")
+    override suspend fun getCategories(): ResponseContainer<String> {
+        return withContext(ioDispatcher) {
+            apiCall {
+                shopApi.getCategories()
+            }.safeUnwrap()
+        }
     }
 
     override suspend fun getCart() {

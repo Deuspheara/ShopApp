@@ -1,9 +1,12 @@
 package fr.deuspheara.eshopapp.data.datasource.shop.local
 
 import androidx.paging.PagingSource
+import fr.deuspheara.eshopapp.data.database.model.ItemCartEntity
+import fr.deuspheara.eshopapp.data.database.model.ItemCartWithProduct
 import fr.deuspheara.eshopapp.data.database.model.ProductEntity
 import fr.deuspheara.eshopapp.data.database.model.ProductWithSpecifications
 import fr.deuspheara.eshopapp.data.datasource.shop.remote.ProductResponse
+import java.time.Instant
 
 /**
  * _Eshopapp_
@@ -92,4 +95,43 @@ interface ShopLocalDataSource {
      * @param id
      */
     suspend fun deleteProductById(id: String)
+
+
+    /**
+     * Get cart products
+     *
+     * @return List<[ItemCartWithProduct]>
+     */
+    suspend fun getCartProducts(): List<ItemCartWithProduct>
+
+    /**
+     * Increment cart item quantity by id
+     *
+     * @param id
+     */
+    suspend fun incrementCartItemQuantityById(id: String): Int
+
+
+    /**
+     * Decrement cart item quantity by id
+     *
+     * @param id
+     */
+    suspend fun decrementCartItemQuantityById(id: String): Int
+
+    /**
+     * Delete cart item by id
+     *
+     * @param id
+     */
+    suspend fun deleteCartItemById(id: String): Instant
+
+    /**
+     * Get cart item by id
+     *
+     * @param id
+     *
+     * @return [ItemCartEntity]
+     */
+    suspend fun getCartItemById(id: String): ItemCartEntity?
 }

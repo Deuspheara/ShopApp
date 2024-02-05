@@ -96,15 +96,6 @@ fun ListShopCard(
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    if (promotion != null) {
-                        Text(
-                            text = promotion.value.toString() + Currency.getInstance(promotion.currency).symbol,
-                            style = MaterialTheme.typography.labelMedium,
-                            color = MaterialTheme.colorScheme.onSurface,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                        )
-                    }
                     if (price != null) {
                         Text(
                             text = price.value.toString() + Currency.getInstance(price.currency).symbol,
@@ -112,9 +103,19 @@ fun ListShopCard(
                             color = MaterialTheme.colorScheme.onSurface,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
+                        )
+                    }
+                    if (promotion != null) {
+                        Text(
+                            text = promotion.value.toString() + Currency.getInstance(promotion.currency).symbol,
+                            style = MaterialTheme.typography.labelMedium,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
                             textDecoration = TextDecoration.LineThrough
                         )
                     }
+
                 }
             }
             Spacer(modifier = Modifier.weight(1f))

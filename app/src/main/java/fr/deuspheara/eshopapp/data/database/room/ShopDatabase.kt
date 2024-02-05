@@ -5,6 +5,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import fr.deuspheara.eshopapp.data.database.dao.ShopDao
+import fr.deuspheara.eshopapp.data.database.model.ItemCartEntity
 import fr.deuspheara.eshopapp.data.database.model.ProductEntity
 import fr.deuspheara.eshopapp.data.database.model.SpecificationEntity
 
@@ -21,7 +22,7 @@ import fr.deuspheara.eshopapp.data.database.model.SpecificationEntity
  *
  */
 @Database(
-    entities = [ProductEntity::class, SpecificationEntity::class],
+    entities = [ProductEntity::class, SpecificationEntity::class, ItemCartEntity::class],
     version = 1,
     exportSchema = false
 )

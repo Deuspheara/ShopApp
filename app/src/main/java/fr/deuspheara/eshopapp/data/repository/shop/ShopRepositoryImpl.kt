@@ -14,8 +14,11 @@ import fr.deuspheara.eshopapp.core.model.products.Identifier
 import fr.deuspheara.eshopapp.core.model.products.ImageUrl
 import fr.deuspheara.eshopapp.core.model.products.Name
 import fr.deuspheara.eshopapp.core.model.products.Price
+import fr.deuspheara.eshopapp.core.model.products.ProductCartInfoModel
+import fr.deuspheara.eshopapp.core.model.products.ProductCartModel
 import fr.deuspheara.eshopapp.core.model.products.ProductFullModel
 import fr.deuspheara.eshopapp.core.model.products.ProductLightModel
+import fr.deuspheara.eshopapp.core.model.products.Quantity
 import fr.deuspheara.eshopapp.core.model.products.Rating
 import fr.deuspheara.eshopapp.core.model.products.ReviewsCount
 import fr.deuspheara.eshopapp.core.model.products.StockQuantity
@@ -108,20 +111,29 @@ class ShopRepositoryImpl @Inject constructor(
         return remoteProduct?.toProductList()
     }
 
-    override suspend fun getCategories() {
-        TODO("Not yet implemented")
+    override suspend fun getCategories(): List<String> {
+        return shopDataSource.getCategories().results
     }
 
-    override suspend fun getCart() {
-        TODO("Not yet implemented")
+    override suspend fun getCart() : List<ProductCartModel> {
+        return shopLocalDataSource.getCartProducts().map(::ProductCartModel)
     }
 
-    override suspend fun addToCart(productId :String) {
-        TODO("Not yet implemented")
+    override suspend fun incrementCartItemQuantityById(itemId: String): Int {
+        return shopLocalDataSource.incrementCartItemQuantityById(itemId)
     }
 
-    override suspend fun removeFromCart(productId :String) {
-        TODO("Not yet implemented")
+    override suspend fun decrementCartItemQuantityById(itemId: String): Int {
+        return shopLocalDataSource.decrementCartItemQuantityById(itemId)
+    }
+
+    override suspend fun getCartItemById(itemId: String): ProductCartInfoModel? {
+        return shopLocalDataSource.getCartItemById(itemId)?.let {
+            ProductCartInfoModel(
+                id= Identifier(it.productId),
+                quantity = Quantity(it.quantity)
+            )
+        }
     }
 
     override suspend fun getOrders() {
@@ -135,6 +147,7 @@ class ShopRepositoryImpl @Inject constructor(
     override suspend fun getOrderDetail(orderId :String) {
         TODO("Not yet implemented")
     }
+
 
     private fun ProductResponse.toProductList(): List<ProductFullModel> {
         return this.results.map { productResponse ->
@@ -185,9 +198,10 @@ class ShopRepositoryImpl @Inject constructor(
                 price = Price(price, "USD"),
                 promotionPrice = Price(promotionPrice, "USD"),
                 rating = Rating(rating),
-                reviewsCount = ReviewsCount(reviewsCount)
+                reviewsCount = ReviewsCount(reviewsCount),
             )
         }
+
 
 
 }
