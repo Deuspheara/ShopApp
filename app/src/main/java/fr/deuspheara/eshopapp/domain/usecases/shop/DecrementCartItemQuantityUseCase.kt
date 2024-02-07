@@ -2,7 +2,6 @@ package fr.deuspheara.eshopapp.domain.usecases.shop
 
 import android.util.Log
 import fr.deuspheara.eshopapp.core.model.products.Identifier
-import fr.deuspheara.eshopapp.core.model.products.ProductCartInfoModel
 import fr.deuspheara.eshopapp.data.repository.shop.ShopRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -12,26 +11,26 @@ import javax.inject.Inject
 /**
  * _Eshopapp_
  *
- * fr.deuspheara.eshopapp.domain.usecases.shop.GetCartItemById
+ * fr.deuspheara.eshopapp.domain.usecases.shop.DecrementCartItemQuantityUseCase
  *
  * ### Information
  * - __Author__ Deuspheara
  *
  * ### Description
- * Get cart item by id
+ * Decrement cart item quantity use case
  *
  */
-class GetCartItemById @Inject constructor(
-    private val shopRepository: ShopRepository
-){
+class DecrementCartItemQuantityUseCase @Inject constructor(
+    private val repository: ShopRepository
+) {
     private companion object {
-        private const val TAG = "GetCartItemById"
+        const val TAG = "DecrementCartItemQuantityUseCase"
     }
 
-    suspend operator fun invoke(id: Identifier): Flow<ProductCartInfoModel?> = flow {
-        emit(shopRepository.getCartItemById(id))
+    suspend operator fun invoke(productId: Identifier): Flow<Int> = flow {
+        emit(repository.decrementCartItemQuantityById(productId))
     }.catch { e ->
-        Log.e(TAG, "Error while getting cart item by id", e)
+        Log.e(TAG, "Error decrementing cart item quantity", e)
         throw e
     }
 }

@@ -22,4 +22,7 @@
     <string name="auth_title">Authentication</string>
     <string name="add_to_cart">Add to cart</string>
     <string name="category_computer">Computer</string>
+    <string name="cd_minus">Minus icon</string>
+    <string name="cd_plus">Plus icon</string>
+    <string name="cart">Cart</string>
 </resources>

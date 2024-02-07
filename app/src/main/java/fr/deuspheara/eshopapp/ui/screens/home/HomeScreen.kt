@@ -81,6 +81,7 @@ fun HomeScreen(
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     onNavigateToDetailedProduct: (String) -> Unit = {},
     onNavigateToSignIn: () -> Unit = {},
+    onNavigateToCart: () -> Unit = {},
 ) {
     val context = LocalContext.current
 
@@ -141,9 +142,7 @@ fun HomeScreen(
                             }
                         },
                         actions = {
-                            IconButton(onClick = {
-                                Toast.makeText(context, "Shopping cart", Toast.LENGTH_SHORT).show()
-                            }) {
+                            IconButton(onClick = onNavigateToCart) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.ic_shopping_cart),
                                     contentDescription = stringResource(R.string.cd_shopping_cart),

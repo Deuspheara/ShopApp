@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.paging.PagingSource
 import com.google.gson.Gson
 import fr.deuspheara.eshopapp.core.coroutines.DispatcherModule
+import fr.deuspheara.eshopapp.core.model.products.Identifier
 import fr.deuspheara.eshopapp.data.database.model.ItemCartEntity
 import fr.deuspheara.eshopapp.data.database.model.ItemCartWithProduct
 import fr.deuspheara.eshopapp.data.database.model.ProductEntity
@@ -122,18 +123,18 @@ class ShopLocalDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun incrementCartItemQuantityById(id: String): Int {
+    override suspend fun incrementCartItemQuantityById(id: Identifier): Int {
         return withContext(ioDispatcher) {
             try {
-                val cartItem = database.shopDao.getCartItemById(id)
+                val cartItem = database.shopDao.getCartItemById(id.value)
                 Log.d(TAG, "incrementCartItemQuantityById: $id, cartItem: $cartItem")
                 if(cartItem == null) {
-                    database.shopDao.insertItemCart(ItemCartEntity(productId = id, quantity = 1))
+                    database.shopDao.insertItemCart(ItemCartEntity(productId = id.value, quantity = 1))
                 } else {
-                    database.shopDao.updateItemCartQuantity(id, cartItem.quantity + 1)
+                    database.shopDao.updateItemCartQuantity(id.value, cartItem.quantity + 1)
                 }
 
-                database.shopDao.getCartItemById(id)?.quantity ?: 0
+                database.shopDao.getCartItemById(id.value)?.quantity ?: 0
             } catch (e: Exception) {
                 Log.e(TAG, "Error while adding to cart: $id", e)
                 throw e
@@ -142,12 +143,22 @@ class ShopLocalDataSourceImpl @Inject constructor(
     }
 
 
-    override suspend fun decrementCartItemQuantityById(id: String): Int {
+    override suspend fun decrementCartItemQuantityById(id: Identifier): Int {
         return withContext(ioDispatcher) {
             try {
-                database.shopDao.deleteItemCartById(id)
-
-                database.shopDao.getCartItemById(id)?.quantity ?: 0
+                val cartItem = database.shopDao.getCartItemById(id.value)
+                Log.d(TAG, "decrementCartItemQuantityById: $id, cartItem: $cartItem")
+                if(cartItem == null) {
+                    0
+                } else {
+                    val newQuantity = cartItem.quantity - 1
+                    if(newQuantity <= 0) {
+                        database.shopDao.deleteItemCartById(id.value)
+                    } else {
+                        database.shopDao.updateItemCartQuantity(id.value, newQuantity)
+                    }
+                    newQuantity
+                }
             } catch (e: Exception) {
                 Log.e(TAG, "Error while removing from cart: $id", e)
                 throw e
@@ -155,10 +166,10 @@ class ShopLocalDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun deleteCartItemById(id: String): Instant {
+    override suspend fun deleteCartItemById(id: Identifier): Instant {
         return withContext(ioDispatcher) {
             try {
-                database.shopDao.deleteItemCartById(id)
+                database.shopDao.deleteItemCartById(id.value)
 
                 Instant.now()
             } catch (e: Exception) {
@@ -168,10 +179,10 @@ class ShopLocalDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getCartItemById(id: String): ItemCartEntity? {
+    override suspend fun getCartItemById(id: Identifier): ItemCartEntity? {
         return withContext(ioDispatcher) {
             try {
-                database.shopDao.getCartItemById(id)
+                database.shopDao.getCartItemById(id.value)
             } catch (e: Exception) {
                 Log.e(TAG, "Error while getting cart item by id: $id", e)
                 throw e

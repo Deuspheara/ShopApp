@@ -102,6 +102,12 @@ sealed class ShopAppDestination(
     ) {
         override val route: String = Destinations.SIGN_IN
     }
+
+    data object CartDestination : ShopAppDestination(
+        title = R.string.cart,
+    ) {
+        override val route: String = Destinations.CART
+    }
 }
 
 object Destinations {
@@ -110,6 +116,7 @@ object Destinations {
     const val SIGN_UP = "sign_up"
     const val SIGN_IN = "sign_in"
     const val AUTH = "auth"
+    const val CART = "cart"
 }
 
 

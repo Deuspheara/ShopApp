@@ -1,5 +1,6 @@
 package fr.deuspheara.eshopapp.domain.usecases.shop
 
+import fr.deuspheara.eshopapp.core.model.products.Identifier
 import fr.deuspheara.eshopapp.data.repository.shop.ShopRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -24,7 +25,7 @@ class IncrementCartItemQuantityUseCase @Inject constructor(
         private const val TAG = "IncrementCartItemQuantityUseCase"
     }
 
-    suspend operator fun invoke(productId: String): Flow<Int> = flow{
+    suspend operator fun invoke(productId: Identifier): Flow<Int> = flow{
         emit(shopRepository.incrementCartItemQuantityById(productId))
     }
 }
