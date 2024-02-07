@@ -1,6 +1,7 @@
 package fr.deuspheara.eshopapp.ui.components.bar.search
 
 import androidx.annotation.StringRes
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.size
@@ -12,6 +13,7 @@ import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -46,6 +48,10 @@ fun ShopAppSearchBar(
     enabled: Boolean = true,
     content: @Composable ColumnScope.() -> Unit = {},
 ) {
+    val color by animateColorAsState(
+        targetValue = if (focused) MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.surfaceVariant,
+        label = "SearchBarColor"
+    )
 
     SearchBar(
         query = query,
@@ -82,7 +88,7 @@ fun ShopAppSearchBar(
         },
         shape = RoundedCornerShape(8.dp),
         colors = SearchBarDefaults.colors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant,
+            containerColor = color,
             dividerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
             inputFieldColors = SearchBarDefaults.inputFieldColors(
                 focusedLeadingIconColor = MaterialTheme.colorScheme.onSurface,

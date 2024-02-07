@@ -8,7 +8,6 @@ import androidx.navigation.navigation
 import fr.deuspheara.eshopapp.ui.navigation.ShopAppDestination
 import fr.deuspheara.eshopapp.ui.navigation.ShopAppDestination.Companion.composable
 import fr.deuspheara.eshopapp.ui.navigation.ShopAppRoutable.Companion.navigate
-import fr.deuspheara.eshopapp.ui.screens.auth.signin.SignInScreen
 import fr.deuspheara.eshopapp.ui.screens.cart.CartScreen
 import fr.deuspheara.eshopapp.ui.screens.home.HomeScreen
 import fr.deuspheara.eshopapp.ui.screens.product.detail.ProductDetailScreen
@@ -35,13 +34,6 @@ fun NavGraphBuilder.addMainNavGraph(
         route = "Main",
         startDestination = startDestination.route,
     ) {
-        composable(ShopAppDestination.SignInDestination) {
-            SignInScreen(
-                onNavigateBack = {
-                    navController.navigateUp()
-                },
-            )
-        }
         composable(ShopAppDestination.HomeDestination) {
 
             HomeScreen(

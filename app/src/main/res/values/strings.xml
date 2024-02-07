@@ -25,4 +25,13 @@
     <string name="cd_minus">Minus icon</string>
     <string name="cd_plus">Plus icon</string>
     <string name="cart">Cart</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="dont_have_account">Don\'t have an account?</string>
+    <string name="email">Email</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="address">Address</string>
+    <string name="zip_code">Zip code</string>
+    <string name="city">City</string>
+    <string name="additional_information">"Delivery informations "</string>
 </resources>
