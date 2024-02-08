@@ -1,7 +1,6 @@
 package fr.deuspheara.eshopapp.ui.components.shop.card
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -64,14 +63,8 @@ fun SmallShopCard(
     Box(
         modifier = modifier
             .wrapContentHeight()
-            .width(180.dp)
-
-            .border(
-                width = 1.dp,
-                color = MaterialTheme.colorScheme.outline,
-                shape = MaterialTheme.shapes.medium
-            )
-            .clip(MaterialTheme.shapes.medium)
+            .width(220.dp)
+            .clip(MaterialTheme.shapes.large)
             .clickable(onClick = onClick),
         contentAlignment = Alignment.TopEnd
     ) {
@@ -85,7 +78,8 @@ fun SmallShopCard(
             AsyncImage(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(120.dp),
+                    .clip(MaterialTheme.shapes.large)
+                    .height(140.dp),
                 model = urlImage.value,
                 contentDescription = name.value,
                 contentScale = ContentScale.Crop,
@@ -93,7 +87,6 @@ fun SmallShopCard(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.surfaceVariant)
                     .padding(8.dp)
             ) {
                 Text(
@@ -104,11 +97,19 @@ fun SmallShopCard(
                 Text(
                     text = description.value,
                     color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
-                    style = MaterialTheme.typography.bodySmall,
+                    style = MaterialTheme.typography.bodyMedium,
                 )
-                Row {
+                Row(
+                    modifier = Modifier.padding(top = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     price?.let {
                         Text(
+                            modifier = Modifier
+                                .clip(MaterialTheme.shapes.large)
+                                .background(MaterialTheme.colorScheme.surfaceVariant)
+                                .padding(4.dp)
+                                .padding(horizontal = 8.dp),
                             text = it.value.toString() + Currency.getInstance(it.currency).symbol,
                             color = MaterialTheme.colorScheme.tertiary,
                             style = MaterialTheme.typography.bodyLarge,

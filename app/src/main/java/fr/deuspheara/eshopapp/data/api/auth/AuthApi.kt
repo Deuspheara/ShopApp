@@ -7,6 +7,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 /**
  * _Eshopapp_
@@ -54,5 +55,25 @@ interface AuthApi {
         @Header("Authorization")
         auth: String
     ): Response<Void>
+
+    @POST("user/update")
+    suspend fun updateUser(
+        @Header("Authorization")
+        auth: String? = null,
+        @Query("email")
+        email: String? = null,
+        @Query("last_name")
+        lastName: String? = null,
+        @Query("first_name")
+        firstName: String? = null,
+        @Query("zip_code")
+        zipCode: String? = null,
+        @Query("city")
+        city: String? = null,
+        @Query("address")
+        address: String? = null,
+        @Query("country")
+        country: String? = null,
+    ): Response<TokenResponse>
 
 }

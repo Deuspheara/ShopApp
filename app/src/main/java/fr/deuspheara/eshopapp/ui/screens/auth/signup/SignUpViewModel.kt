@@ -43,6 +43,7 @@ class SignUpViewModel @Inject constructor(
         SignUpUiState.FormInputState(
             username = Username(""),
             password = Password("")
+
         )
     )
 

@@ -34,4 +34,7 @@
     <string name="zip_code">Zip code</string>
     <string name="city">City</string>
     <string name="additional_information">"Delivery informations "</string>
+    <string name="information_title">Delivery information</string>
+    <string name="country">Country</string>
+    <string name="save">Save</string>
 </resources>

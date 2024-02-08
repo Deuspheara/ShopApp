@@ -1,7 +1,6 @@
 package fr.deuspheara.eshopapp.domain.usecases.auth
 
 import android.util.Log
-import fr.deuspheara.eshopapp.core.model.auth.Token
 import fr.deuspheara.eshopapp.data.repository.auth.AuthRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -27,8 +26,8 @@ class AuthenticateUseCase @Inject constructor(
         const val TAG = "AuthenticateUseCase"
     }
 
-    suspend operator fun invoke(token: Token): Flow<Boolean> = flow {
-        emit(authRepository.authenticate(token))
+    suspend operator fun invoke(): Flow<Boolean> = flow {
+        emit(authRepository.authenticate())
     }.catch { e ->
         Log.e(TAG, "invoke: ", e)
         throw e

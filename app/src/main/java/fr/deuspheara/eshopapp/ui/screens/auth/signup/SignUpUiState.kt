@@ -1,5 +1,6 @@
 package fr.deuspheara.eshopapp.ui.screens.auth.signup
 
+import fr.deuspheara.eshopapp.core.model.Consumable
 import fr.deuspheara.eshopapp.core.model.auth.Password
 import fr.deuspheara.eshopapp.core.model.auth.TokenResponse
 import fr.deuspheara.eshopapp.core.model.auth.Username
@@ -25,7 +26,7 @@ sealed interface SignUpUiState {
 
     data class FormInputError(
         val isUsernameError: Boolean,
-        val isPasswordError: Boolean
+        val isPasswordError: Boolean,
     ) : SignUpUiState {
         fun isError() = isUsernameError || isPasswordError
     }
@@ -33,8 +34,7 @@ sealed interface SignUpUiState {
     @JvmInline
     value class Loading(val isLoading: Boolean): SignUpUiState
 
-    @JvmInline
-    value class Success(val token: TokenResponse): SignUpUiState
+    data class Success(val token: TokenResponse): SignUpUiState, Consumable()
 
     @JvmInline
     value class Error(val message: String): SignUpUiState

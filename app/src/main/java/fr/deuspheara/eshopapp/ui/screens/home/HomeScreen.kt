@@ -51,7 +51,7 @@ import fr.deuspheara.eshopapp.core.model.products.Description
 import fr.deuspheara.eshopapp.core.model.products.ImageUrl
 import fr.deuspheara.eshopapp.core.model.products.Name
 import fr.deuspheara.eshopapp.core.model.products.Price
-import fr.deuspheara.eshopapp.ui.components.bar.search.ShopAppSearchBar
+import fr.deuspheara.eshopapp.ui.components.bar.search.ShopAppSearch
 import fr.deuspheara.eshopapp.ui.components.bar.top.ShopAppCenteredTopBar
 import fr.deuspheara.eshopapp.ui.components.shop.card.LargeShopCard
 import fr.deuspheara.eshopapp.ui.components.shop.card.ListShopCard
@@ -166,18 +166,17 @@ fun HomeScreen(
                 .padding(innerPadding),
             verticalArrangement = Arrangement.Top
         ) {
-            ShopAppSearchBar(
+            ShopAppSearch(
                 modifier = Modifier
-                    .padding(horizontal = if (isSearchBarFocused) 0.dp else 16.dp)
                     .fillMaxWidth(),
                 placeholder = R.string.search,
                 query = searchText.searchText,
                 onQueryChange = { viewModel.onSearchTextChange(it) },
-                onSearch = viewModel::fetchSearchProducts,
-                onNavigateBack = { isSearchBarFocused = false },
-                onClearQuery = { isSearchBarFocused = false },
+//                onSearch = viewModel::fetchSearchProducts,
                 focused = isSearchBarFocused,
                 focusedValue = { isSearchBarFocused = it },
+                onClearQuery = { viewModel.onSearchTextChange("") },
+                onNavigateBack = { isSearchBarFocused = false },
             ) {
                 LazyColumn {
                     items(
@@ -211,7 +210,7 @@ fun HomeScreen(
                             modifier = Modifier
                                 .padding(start = 16.dp),
                             onClick = {},
-                            shape = RoundedCornerShape(8.dp),
+                            shape = RoundedCornerShape(32.dp),
                             colors = ButtonDefaults.buttonColors(
                                 contentColor = MaterialTheme.colorScheme.onSurface,
                                 containerColor = MaterialTheme.colorScheme.surfaceVariant,

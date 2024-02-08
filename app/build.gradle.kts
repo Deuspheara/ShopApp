@@ -130,6 +130,14 @@ dependencies {
     androidTestImplementation(libs.room.testing)
     //endregion
 
+    //region Datastore
+    implementation(libs.bundles.datastore)
+    //endregion
+
+    //region Arrow
+    implementation(libs.bundles.arrow)
+    //endregion
+
 
     debugImplementation(libs.leak.canary)
 }

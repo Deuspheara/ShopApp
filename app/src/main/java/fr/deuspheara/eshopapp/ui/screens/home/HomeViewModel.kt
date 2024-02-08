@@ -7,7 +7,6 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.filter
 import dagger.hilt.android.lifecycle.HiltViewModel
-import fr.deuspheara.eshopapp.core.model.auth.Token
 import fr.deuspheara.eshopapp.core.model.products.Category
 import fr.deuspheara.eshopapp.core.model.products.ProductLightModel
 import fr.deuspheara.eshopapp.domain.usecases.auth.AuthenticateUseCase
@@ -94,7 +93,7 @@ class HomeViewModel @Inject constructor(
     private fun authenticate() = viewModelScope.launch {
         _uiState.value = HomeUiState.Loading(true)
 
-        authenticateUseCase(Token("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJqd3QtYXVkaWVuY2UiLCJpc3MiOiJrdG9yIHNhbXBsZSBhcHAiLCJleHAiOjE3Mzc4MTgyNzUsInVzZXJJZCI6IjY1YWFhMGUxYWUzMWVkMDE1NjA1MTIwNCJ9.q42ZMQQsXH2IdmV-muFclHlLoOs3vbwrUn6UtNap6Ro"))
+        authenticateUseCase()
             .map<Boolean, HomeUiState> { isAuthenticated ->
                 Log.d(
                     TAG,

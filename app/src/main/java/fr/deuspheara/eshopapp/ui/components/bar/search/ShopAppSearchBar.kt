@@ -68,7 +68,7 @@ fun ShopAppSearchBar(
                         R.drawable.ic_search
                     ),
                     contentDescription = stringResource(R.string.back),
-                    tint = MaterialTheme.colorScheme.onSurface,
+                    tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
                     modifier = Modifier.size(24.dp)
                 )
             }
@@ -79,30 +79,30 @@ fun ShopAppSearchBar(
                     Icon(
                         painter = painterResource(R.drawable.ic_cross_small),
                         contentDescription = stringResource(R.string.clear),
-                        tint = MaterialTheme.colorScheme.onSurface,
+                        tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
                         modifier = Modifier.size(24.dp)
                     )
                 }
             }
 
         },
-        shape = RoundedCornerShape(8.dp),
+        shape = RoundedCornerShape(32.dp),
         colors = SearchBarDefaults.colors(
             containerColor = color,
             dividerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
             inputFieldColors = SearchBarDefaults.inputFieldColors(
-                focusedLeadingIconColor = MaterialTheme.colorScheme.onSurface,
-                focusedTrailingIconColor = MaterialTheme.colorScheme.onSurface,
-                focusedPlaceholderColor = MaterialTheme.colorScheme.onSurface,
-                focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                unfocusedLeadingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                unfocusedTrailingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                unfocusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                disabledLeadingIconColor = MaterialTheme.colorScheme.surfaceVariant,
-                disabledTrailingIconColor = MaterialTheme.colorScheme.surfaceVariant,
-                disabledPlaceholderColor = MaterialTheme.colorScheme.surfaceVariant,
-                disabledTextColor = MaterialTheme.colorScheme.surfaceVariant,
+                focusedLeadingIconColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+                focusedTrailingIconColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+                focusedPlaceholderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+                focusedTextColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+                unfocusedLeadingIconColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
+                unfocusedTrailingIconColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
+                unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
+                unfocusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
+                disabledLeadingIconColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+                disabledTrailingIconColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+                disabledPlaceholderColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+                disabledTextColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
             )
 
         ),

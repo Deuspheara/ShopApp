@@ -33,7 +33,7 @@ fun InputField(
     modifier: Modifier = Modifier,
     @StringRes label: Int,
     value: String,
-    isError: Boolean,
+    isError: Boolean = false,
     onValueChange: (String) -> Unit,
     enabled: Boolean = true,
     keyboardActions: KeyboardActions = KeyboardActions.Default,

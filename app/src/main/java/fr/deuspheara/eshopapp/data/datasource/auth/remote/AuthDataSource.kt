@@ -1,9 +1,10 @@
 package fr.deuspheara.eshopapp.data.datasource.auth.remote
 
+import androidx.datastore.preferences.core.Preferences
 import fr.deuspheara.eshopapp.core.model.auth.Password
-import fr.deuspheara.eshopapp.core.model.auth.Token
 import fr.deuspheara.eshopapp.core.model.auth.TokenResponse
 import fr.deuspheara.eshopapp.core.model.auth.Username
+import java.time.Instant
 
 /**
  * _Eshopapp_
@@ -43,5 +44,31 @@ interface AuthDataSource {
      *
      * @return [Boolean] true if authenticated, false otherwise
      */
-    suspend fun authenticate(token: Token): Boolean
+    suspend fun authenticate(): Boolean
+
+    /**
+     * Update user
+     *
+     * @param email
+     * @param zipCode
+     * @param address
+     * @param city
+     * @param country
+     * @param firstName
+     * @param lastName
+     *
+     * @return [TokenResponse] the new token
+     */
+    suspend fun updateUser(
+        email: String? = null,
+        zipCode: String? = null,
+        address: String? = null,
+        city: String? = null,
+        country: String? = null,
+        firstName: String? = null,
+        lastName: String? = null
+    ): TokenResponse
+
+    suspend fun <T> loadData(key: Preferences.Key<T>, defaultValue: T): T
+    suspend fun <T> editData(key: Preferences.Key<T>, value: T): Instant?
 }
