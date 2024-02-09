@@ -59,6 +59,7 @@ fun InformationItem(
                     .align(Alignment.CenterVertically)
                     .skeletonLoader(isLoading = title.isEmpty()),
                 style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurface
             )
         }
 

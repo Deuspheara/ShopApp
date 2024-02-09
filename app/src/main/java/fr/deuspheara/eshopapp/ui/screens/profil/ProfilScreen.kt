@@ -14,8 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -24,6 +25,7 @@ import fr.deuspheara.eshopapp.R
 import fr.deuspheara.eshopapp.core.model.auth.UserFullModel
 import fr.deuspheara.eshopapp.ui.components.InformationItem
 import fr.deuspheara.eshopapp.ui.components.bar.top.ShopAppCenteredTopBar
+import fr.deuspheara.eshopapp.ui.components.button.ActionButton
 import fr.deuspheara.eshopapp.ui.navigation.ShopAppDestination
 
 /**
@@ -56,18 +58,17 @@ fun ProfilScreen(
                     IconButton(onClick = onNavigateBack) {
                         Icon(
                             modifier = Modifier.size(24.dp),
-                            painter = painterResource(id = R.drawable.ic_arrow_left),
+                            imageVector = ImageVector.vectorResource(id = R.drawable.ic_arrow_left),
                             contentDescription = stringResource(id = R.string.back)
                         )
                     }
                 },
                 actions = {
                     IconButton(onClick = { }) {
-                        //logout
                         Icon(
                             modifier = Modifier.size(24.dp),
-                            painter = painterResource(id = R.drawable.ic_logout),
-                            contentDescription = stringResource(id = R.string.logout)
+                            imageVector = ImageVector.vectorResource(id = R.drawable.ic_edit),
+                            contentDescription = stringResource(id = R.string.edit)
                         )
                     }
                 }
@@ -115,7 +116,8 @@ fun ProfileScreenContent(
             Text(
                 text = stringResource(id = R.string.information_title),
                 style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(16.dp),
+                color = MaterialTheme.colorScheme.onSurface
             )
 
             if (zipCode != null || address != null) {
@@ -138,8 +140,13 @@ fun ProfileScreenContent(
                     title = country,
                 )
             }
-
-
+            ActionButton(
+                modifier = Modifier.padding(16.dp),
+                text = R.string.logout,
+                onClick = { },
+                isLoading = false,
+                leadingIcon = R.drawable.ic_logout
+            )
         }
 
     }

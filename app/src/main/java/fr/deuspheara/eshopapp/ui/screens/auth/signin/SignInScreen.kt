@@ -238,7 +238,6 @@ fun SignInContent(
             onClick = onNavigateToSignUp,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp)
         ) {
             Text(
                 text = stringResource(id = R.string.dont_have_account),

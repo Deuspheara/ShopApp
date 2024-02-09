@@ -62,7 +62,7 @@ class HomeViewModel @Inject constructor(
         getRecentLocalProductsUseCase().cachedIn(viewModelScope)
 
 
-    val _isAuthenticated = MutableStateFlow(false)
+    private val _isAuthenticated = MutableStateFlow(false)
     val isAuthenticated: StateFlow<Boolean> = _isAuthenticated.asStateFlow()
 
     val filteredProducts: Flow<PagingData<ProductLightModel>> =
