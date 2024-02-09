@@ -1,6 +1,7 @@
 package fr.deuspheara.eshopapp.data.datasource.shop.local
 
 import androidx.paging.PagingSource
+import fr.deuspheara.eshopapp.core.model.products.Identifier
 import fr.deuspheara.eshopapp.data.database.model.ItemCartEntity
 import fr.deuspheara.eshopapp.data.database.model.ItemCartWithProduct
 import fr.deuspheara.eshopapp.data.database.model.ProductEntity
@@ -109,7 +110,7 @@ interface ShopLocalDataSource {
      *
      * @param id
      */
-    suspend fun incrementCartItemQuantityById(id: String): Int
+    suspend fun incrementCartItemQuantityById(id: Identifier): Int
 
 
     /**
@@ -117,14 +118,14 @@ interface ShopLocalDataSource {
      *
      * @param id
      */
-    suspend fun decrementCartItemQuantityById(id: String): Int
+    suspend fun decrementCartItemQuantityById(id: Identifier): Int
 
     /**
      * Delete cart item by id
      *
      * @param id
      */
-    suspend fun deleteCartItemById(id: String): Instant
+    suspend fun deleteCartItemById(id: Identifier): Instant
 
     /**
      * Get cart item by id
@@ -133,5 +134,5 @@ interface ShopLocalDataSource {
      *
      * @return [ItemCartEntity]
      */
-    suspend fun getCartItemById(id: String): ItemCartEntity?
+    suspend fun getCartItemById(id: Identifier): ItemCartEntity?
 }

@@ -1,6 +1,7 @@
 package fr.deuspheara.eshopapp.domain.usecases.shop
 
 import android.util.Log
+import fr.deuspheara.eshopapp.core.model.products.Identifier
 import fr.deuspheara.eshopapp.core.model.products.ProductCartInfoModel
 import fr.deuspheara.eshopapp.data.repository.shop.ShopRepository
 import kotlinx.coroutines.flow.Flow
@@ -27,7 +28,7 @@ class GetCartItemById @Inject constructor(
         private const val TAG = "GetCartItemById"
     }
 
-    suspend operator fun invoke(id: String): Flow<ProductCartInfoModel?> = flow {
+    suspend operator fun invoke(id: Identifier): Flow<ProductCartInfoModel?> = flow {
         emit(shopRepository.getCartItemById(id))
     }.catch { e ->
         Log.e(TAG, "Error while getting cart item by id", e)

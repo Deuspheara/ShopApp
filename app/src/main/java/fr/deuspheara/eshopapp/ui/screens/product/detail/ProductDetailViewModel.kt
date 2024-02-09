@@ -5,6 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import fr.deuspheara.eshopapp.core.model.products.Identifier
 import fr.deuspheara.eshopapp.core.model.products.Quantity
 import fr.deuspheara.eshopapp.domain.usecases.shop.GetCartItemById
 import fr.deuspheara.eshopapp.domain.usecases.shop.GetProductsByIdsUseCase
@@ -75,7 +76,7 @@ class ProductDetailViewModel @Inject constructor(
     }
 
     private fun fetchCartQuantity() = viewModelScope.launch {
-        getCartItemById(idProduct)
+        getCartItemById(Identifier(idProduct))
             .map {
                 it?.quantity ?: Quantity(0)
             }.catch { e ->
@@ -88,7 +89,7 @@ class ProductDetailViewModel @Inject constructor(
 
     fun addToCart() = viewModelScope.launch {
         try {
-            incrementCartItemQuantity(idProduct).collectLatest {
+            incrementCartItemQuantity(Identifier(idProduct)).collectLatest {
                 _cartQuantity.value = Quantity(_cartQuantity.value.value + 1)
             }
             Log.d(TAG, "addToCart: idProduct: $idProduct, quantity: ${_cartQuantity.value}")

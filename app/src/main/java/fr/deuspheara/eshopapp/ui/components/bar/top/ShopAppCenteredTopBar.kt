@@ -41,7 +41,7 @@ fun ShopAppCenteredTopBar(
                 Text(
                     text = stringResource(destination.title),
                     style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onSecondary,
+                    color = MaterialTheme.colorScheme.onBackground,
                 )
             }
         },

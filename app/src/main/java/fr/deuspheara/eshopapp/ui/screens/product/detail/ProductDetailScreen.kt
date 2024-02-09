@@ -39,6 +39,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.rememberAsyncImagePainter
 import fr.deuspheara.eshopapp.R
@@ -77,7 +78,7 @@ import java.util.Currency
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ProductDetailScreen(
-    viewModel: ProductDetailViewModel,
+    viewModel: ProductDetailViewModel = hiltViewModel(),
     onNavigateBack: () -> Unit = {}
 ) {
 

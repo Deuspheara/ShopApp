@@ -1,8 +1,8 @@
 package fr.deuspheara.eshopapp.data.repository.auth
 
 import fr.deuspheara.eshopapp.core.model.auth.Password
-import fr.deuspheara.eshopapp.core.model.auth.Token
 import fr.deuspheara.eshopapp.core.model.auth.TokenResponse
+import fr.deuspheara.eshopapp.core.model.auth.UserFullModel
 import fr.deuspheara.eshopapp.core.model.auth.Username
 
 /**
@@ -42,5 +42,35 @@ interface AuthRepository {
      *
      * @return [Boolean] true if authenticated, false otherwise
      */
-    suspend fun authenticate(token: Token): Boolean
+    suspend fun authenticate(): Boolean
+
+    /**
+     * Update user
+     * @param token
+     * @param email
+     * @param zipCode
+     * @param address
+     * @param city
+     * @param country
+     * @param firstName
+     * @param lastName
+     *
+     * @return token a [TokenResponse]
+     */
+    suspend fun updateUser(
+        email: String?,
+        zipCode: String?,
+        address: String?,
+        city: String?,
+        country: String?,
+        firstName: String?,
+        lastName: String?
+    ): TokenResponse
+
+    /**
+     * Get user
+     *
+     * @return [UserFullModel]
+     */
+    suspend fun getUser(): UserFullModel
 }

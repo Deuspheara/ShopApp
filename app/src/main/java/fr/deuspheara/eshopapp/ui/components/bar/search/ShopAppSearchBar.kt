@@ -1,6 +1,7 @@
 package fr.deuspheara.eshopapp.ui.components.bar.search
 
 import androidx.annotation.StringRes
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.size
@@ -12,6 +13,7 @@ import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -46,6 +48,10 @@ fun ShopAppSearchBar(
     enabled: Boolean = true,
     content: @Composable ColumnScope.() -> Unit = {},
 ) {
+    val color by animateColorAsState(
+        targetValue = if (focused) MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.surfaceVariant,
+        label = "SearchBarColor"
+    )
 
     SearchBar(
         query = query,
@@ -62,7 +68,7 @@ fun ShopAppSearchBar(
                         R.drawable.ic_search
                     ),
                     contentDescription = stringResource(R.string.back),
-                    tint = MaterialTheme.colorScheme.onSurface,
+                    tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
                     modifier = Modifier.size(24.dp)
                 )
             }
@@ -73,30 +79,30 @@ fun ShopAppSearchBar(
                     Icon(
                         painter = painterResource(R.drawable.ic_cross_small),
                         contentDescription = stringResource(R.string.clear),
-                        tint = MaterialTheme.colorScheme.onSurface,
+                        tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
                         modifier = Modifier.size(24.dp)
                     )
                 }
             }
 
         },
-        shape = RoundedCornerShape(8.dp),
+        shape = RoundedCornerShape(32.dp),
         colors = SearchBarDefaults.colors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant,
+            containerColor = color,
             dividerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
             inputFieldColors = SearchBarDefaults.inputFieldColors(
-                focusedLeadingIconColor = MaterialTheme.colorScheme.onSurface,
-                focusedTrailingIconColor = MaterialTheme.colorScheme.onSurface,
-                focusedPlaceholderColor = MaterialTheme.colorScheme.onSurface,
-                focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                unfocusedLeadingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                unfocusedTrailingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                unfocusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                disabledLeadingIconColor = MaterialTheme.colorScheme.surfaceVariant,
-                disabledTrailingIconColor = MaterialTheme.colorScheme.surfaceVariant,
-                disabledPlaceholderColor = MaterialTheme.colorScheme.surfaceVariant,
-                disabledTextColor = MaterialTheme.colorScheme.surfaceVariant,
+                focusedLeadingIconColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+                focusedTrailingIconColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+                focusedPlaceholderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+                focusedTextColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+                unfocusedLeadingIconColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
+                unfocusedTrailingIconColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
+                unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
+                unfocusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
+                disabledLeadingIconColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+                disabledTrailingIconColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+                disabledPlaceholderColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+                disabledTextColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
             )
 
         ),

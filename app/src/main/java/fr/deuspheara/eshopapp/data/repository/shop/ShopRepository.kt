@@ -1,6 +1,7 @@
 package fr.deuspheara.eshopapp.data.repository.shop
 
 import androidx.paging.PagingData
+import fr.deuspheara.eshopapp.core.model.products.Identifier
 import fr.deuspheara.eshopapp.core.model.products.ProductCartInfoModel
 import fr.deuspheara.eshopapp.core.model.products.ProductCartModel
 import fr.deuspheara.eshopapp.core.model.products.ProductFullModel
@@ -39,11 +40,11 @@ interface ShopRepository {
 
     suspend fun getCart() : List<ProductCartModel>
 
-    suspend fun incrementCartItemQuantityById(itemId: String): Int
+    suspend fun incrementCartItemQuantityById(itemId: Identifier): Int
 
-    suspend fun decrementCartItemQuantityById(itemId: String): Int
+    suspend fun decrementCartItemQuantityById(itemId: Identifier): Int
 
-    suspend fun getCartItemById(itemId: String): ProductCartInfoModel?
+    suspend fun getCartItemById(itemId: Identifier): ProductCartInfoModel?
 
     suspend fun getOrders()
 

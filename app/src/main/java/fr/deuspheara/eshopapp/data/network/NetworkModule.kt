@@ -45,14 +45,6 @@ object NetworkModule {
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder().apply {
-//            addInterceptor(
-//                Interceptor { chain ->
-//                    val request = chain.request().newBuilder()
-//                        .addHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJqd3QtYXVkaWVuY2UiLCJpc3MiOiJrdG9yIHNhbXBsZSBhcHAiLCJleHAiOjE3MzcyMjExMTQsInVzZXJJZCI6IjY1YWFhMGUxYWUzMWVkMDE1NjA1MTIwNCJ9.r0XyD-eY7OK29-uX4wmOkcb5mR3eeiXKDdFy_V6-Mc4")
-//                        .build()
-//                    chain.proceed(request)
-//                }
-//            )
             if (BuildConfig.DEBUG) {
                 addInterceptor(
                     HttpLoggingInterceptor().apply {

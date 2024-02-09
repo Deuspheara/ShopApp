@@ -1,9 +1,9 @@
 package fr.deuspheara.eshopapp.data.datasource.auth.remote
 
 import fr.deuspheara.eshopapp.core.model.auth.Password
-import fr.deuspheara.eshopapp.core.model.auth.Token
 import fr.deuspheara.eshopapp.core.model.auth.TokenResponse
 import fr.deuspheara.eshopapp.core.model.auth.Username
+import fr.deuspheara.eshopapp.data.network.model.auth.UserRemote
 
 /**
  * _Eshopapp_
@@ -39,9 +39,39 @@ interface AuthDataSource {
 
     /**
      * Authenticate
-     * @param token token
      *
      * @return [Boolean] true if authenticated, false otherwise
      */
-    suspend fun authenticate(token: Token): Boolean
+    suspend fun authenticate(): Boolean
+
+    /**
+     * Update user
+     *
+     * @param email
+     * @param zipCode
+     * @param address
+     * @param city
+     * @param country
+     * @param firstName
+     * @param lastName
+     *
+     * @return [TokenResponse] the new token
+     */
+    suspend fun updateUser(
+        email: String? = null,
+        zipCode: String? = null,
+        address: String? = null,
+        city: String? = null,
+        country: String? = null,
+        firstName: String? = null,
+        lastName: String? = null
+    ): TokenResponse
+
+
+    /**
+     * Get user
+     *
+     * @return [UserRemote] the user
+     */
+    suspend fun getUser(): UserRemote
 }

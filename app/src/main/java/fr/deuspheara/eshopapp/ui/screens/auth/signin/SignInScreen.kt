@@ -20,6 +20,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -62,7 +63,8 @@ import fr.deuspheara.eshopapp.ui.theme.ShopAppTheme
 @Composable
 fun SignInScreen(
     viewModel: SignInViewModel = hiltViewModel(),
-    onNavigateBack: () -> Unit
+    onNavigateBack: () -> Unit,
+    onNavigateSignUp: () -> Unit
 ) {
 
     val uiState: SignInUiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -124,6 +126,7 @@ fun SignInScreen(
             onPasswordFocusChanged = { isPasswordFocus = it },
             onSignIn = viewModel::signIn,
             isLoading = isLoading,
+            onNavigateToSignUp = onNavigateSignUp
         )
 
     }
@@ -143,7 +146,8 @@ fun SignInContent(
     onSignIn: () -> Unit = {},
     isLoading: Boolean = false,
     isPasswordFocus: Boolean = false,
-    onPasswordFocusChanged: (Boolean) -> Unit = {}
+    onPasswordFocusChanged: (Boolean) -> Unit = {},
+    onNavigateToSignUp: () -> Unit = {}
 ) {
     Column(modifier = modifier.padding(horizontal = 16.dp)) {
         // Username input field
@@ -229,6 +233,16 @@ fun SignInContent(
                     color = MaterialTheme.colorScheme.onPrimary
                 )
             }
+        }
+        TextButton(
+            onClick = onNavigateToSignUp,
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            Text(
+                text = stringResource(id = R.string.dont_have_account),
+                color = MaterialTheme.colorScheme.onSurface
+            )
         }
     }
 }

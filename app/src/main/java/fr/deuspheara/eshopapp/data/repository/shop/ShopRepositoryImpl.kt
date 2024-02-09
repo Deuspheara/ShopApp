@@ -119,15 +119,15 @@ class ShopRepositoryImpl @Inject constructor(
         return shopLocalDataSource.getCartProducts().map(::ProductCartModel)
     }
 
-    override suspend fun incrementCartItemQuantityById(itemId: String): Int {
+    override suspend fun incrementCartItemQuantityById(itemId: Identifier): Int {
         return shopLocalDataSource.incrementCartItemQuantityById(itemId)
     }
 
-    override suspend fun decrementCartItemQuantityById(itemId: String): Int {
+    override suspend fun decrementCartItemQuantityById(itemId: Identifier): Int {
         return shopLocalDataSource.decrementCartItemQuantityById(itemId)
     }
 
-    override suspend fun getCartItemById(itemId: String): ProductCartInfoModel? {
+    override suspend fun getCartItemById(itemId: Identifier): ProductCartInfoModel? {
         return shopLocalDataSource.getCartItemById(itemId)?.let {
             ProductCartInfoModel(
                 id= Identifier(it.productId),

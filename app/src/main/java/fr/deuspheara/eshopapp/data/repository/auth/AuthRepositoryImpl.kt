@@ -1,8 +1,8 @@
 package fr.deuspheara.eshopapp.data.repository.auth
 
 import fr.deuspheara.eshopapp.core.model.auth.Password
-import fr.deuspheara.eshopapp.core.model.auth.Token
 import fr.deuspheara.eshopapp.core.model.auth.TokenResponse
+import fr.deuspheara.eshopapp.core.model.auth.UserFullModel
 import fr.deuspheara.eshopapp.core.model.auth.Username
 import fr.deuspheara.eshopapp.data.datasource.auth.remote.AuthDataSource
 import javax.inject.Inject
@@ -33,7 +33,31 @@ class AuthRepositoryImpl @Inject constructor(
         return authDataSource.signUp(username, password)
     }
 
-    override suspend fun authenticate(token: Token): Boolean {
-        return authDataSource.authenticate(token)
+    override suspend fun authenticate(): Boolean {
+        return authDataSource.authenticate()
+    }
+
+    override suspend fun updateUser(
+        email: String?,
+        zipCode: String?,
+        address: String?,
+        city: String?,
+        country: String?,
+        firstName: String?,
+        lastName: String?
+    ): TokenResponse {
+        return authDataSource.updateUser(
+            email,
+            zipCode,
+            address,
+            city,
+            country,
+            firstName,
+            lastName
+        )
+    }
+
+    override suspend fun getUser(): UserFullModel {
+        return authDataSource.getUser().let(::UserFullModel)
     }
 }
