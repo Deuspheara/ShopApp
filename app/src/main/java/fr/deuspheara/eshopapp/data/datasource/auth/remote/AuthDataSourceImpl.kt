@@ -14,6 +14,7 @@ import fr.deuspheara.eshopapp.data.api.auth.AuthApi
 import fr.deuspheara.eshopapp.data.network.NetworkModule.apiCall
 import fr.deuspheara.eshopapp.data.network.NetworkModule.safeUnwrap
 import fr.deuspheara.eshopapp.data.network.NetworkModule.safeUnwrapEmptyResponse
+import fr.deuspheara.eshopapp.data.network.model.auth.UserRemote
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -115,7 +116,17 @@ class AuthDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun <T> loadData(key: Preferences.Key<T>, defaultValue: T): T {
+    override suspend fun getUser(): UserRemote {
+        return withContext(ioDispatcher) {
+            val tokenValue = loadData(TOKEN, "")
+
+            apiCall {
+                authApi.getUser("Bearer $tokenValue")
+            }.safeUnwrap()
+        }
+    }
+
+    private suspend fun <T> loadData(key: Preferences.Key<T>, defaultValue: T): T {
         return withContext(ioDispatcher) {
             try {
                 dataStore.data.map { preferences ->
@@ -128,7 +139,7 @@ class AuthDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun <T> editData(key: Preferences.Key<T>, value: T): Instant? {
+    private suspend fun <T> editData(key: Preferences.Key<T>, value: T): Instant? {
         return withContext(ioDispatcher) {
             try {
                 dataStore.edit { preferences ->

@@ -2,6 +2,7 @@ package fr.deuspheara.eshopapp.data.api.auth
 
 import fr.deuspheara.eshopapp.core.model.auth.AuthRequest
 import fr.deuspheara.eshopapp.core.model.auth.TokenResponse
+import fr.deuspheara.eshopapp.data.network.model.auth.UserRemote
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -75,5 +76,12 @@ interface AuthApi {
         @Query("country")
         country: String? = null,
     ): Response<TokenResponse>
+
+
+    @GET("user")
+    suspend fun getUser(
+        @Header("Authorization")
+        auth: String
+    ): Response<UserRemote>
 
 }

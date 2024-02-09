@@ -1,10 +1,9 @@
 package fr.deuspheara.eshopapp.data.datasource.auth.remote
 
-import androidx.datastore.preferences.core.Preferences
 import fr.deuspheara.eshopapp.core.model.auth.Password
 import fr.deuspheara.eshopapp.core.model.auth.TokenResponse
 import fr.deuspheara.eshopapp.core.model.auth.Username
-import java.time.Instant
+import fr.deuspheara.eshopapp.data.network.model.auth.UserRemote
 
 /**
  * _Eshopapp_
@@ -40,7 +39,6 @@ interface AuthDataSource {
 
     /**
      * Authenticate
-     * @param token token
      *
      * @return [Boolean] true if authenticated, false otherwise
      */
@@ -69,6 +67,11 @@ interface AuthDataSource {
         lastName: String? = null
     ): TokenResponse
 
-    suspend fun <T> loadData(key: Preferences.Key<T>, defaultValue: T): T
-    suspend fun <T> editData(key: Preferences.Key<T>, value: T): Instant?
+
+    /**
+     * Get user
+     *
+     * @return [UserRemote] the user
+     */
+    suspend fun getUser(): UserRemote
 }

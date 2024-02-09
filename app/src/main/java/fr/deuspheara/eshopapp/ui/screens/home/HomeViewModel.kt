@@ -62,7 +62,8 @@ class HomeViewModel @Inject constructor(
         getRecentLocalProductsUseCase().cachedIn(viewModelScope)
 
 
-
+    val _isAuthenticated = MutableStateFlow(false)
+    val isAuthenticated: StateFlow<Boolean> = _isAuthenticated.asStateFlow()
 
     val filteredProducts: Flow<PagingData<ProductLightModel>> =
         combine(_searchText, allProducts) { searchText, allProducts ->
@@ -99,6 +100,7 @@ class HomeViewModel @Inject constructor(
                     TAG,
                     "isAuthenticated: ${if (isAuthenticated) "user is authenticated" else "user is not authenticated"}"
                 )
+                _isAuthenticated.value = isAuthenticated
                 HomeUiState.Authenticated(isAuthenticated)
             }.catch { e ->
                 emit(HomeUiState.Error(e.message ?: "Unknown error"))

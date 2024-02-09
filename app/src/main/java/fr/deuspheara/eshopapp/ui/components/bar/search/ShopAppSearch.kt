@@ -3,11 +3,14 @@ package fr.deuspheara.eshopapp.ui.components.bar.search
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -17,7 +20,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -52,16 +55,18 @@ fun ShopAppSearch(
     focusedValue: (Boolean) -> Unit = {},
     content: @Composable () -> Unit = {}
 ) {
-    Column {
+
+    Column(
+        modifier = modifier
+    ) {
         TextField(
             modifier = modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
                 .background(
                     color = MaterialTheme.colorScheme.surfaceVariant,
-                    shape = RoundedCornerShape(8.dp)
-                )
-                .onFocusChanged {
+                    shape = RoundedCornerShape(32.dp)
+                ).onFocusEvent {
                     focusedValue(it.isFocused)
                 },
             colors = TextFieldDefaults.colors(
@@ -70,7 +75,7 @@ fun ShopAppSearch(
                 unfocusedIndicatorColor = Color.Transparent,
                 disabledIndicatorColor = Color.Transparent,
             ),
-            shape = RoundedCornerShape(32.dp),
+            shape = CircleShape,
             value = query,
             onValueChange = onQueryChange,
             maxLines = maxLines,
@@ -80,7 +85,9 @@ fun ShopAppSearch(
             trailingIcon = trailingIcon?.let<Int, @Composable (() -> Unit)?> {
                 return@let {
                     if (focused) {
-                        IconButton(onClick = onClearQuery) {
+                        IconButton(
+                            onClick = onClearQuery
+                        ) {
                             Icon(
                                 painter = painterResource(R.drawable.ic_cross_small),
                                 contentDescription = stringResource(R.string.clear),
@@ -94,7 +101,10 @@ fun ShopAppSearch(
             },
             leadingIcon = leadingIcon?.let<Int, @Composable (() -> Unit)?> {
                 return@let {
-                    IconButton(onClick = onNavigateBack) {
+                    IconButton(
+                        modifier = Modifier.padding(start = 8.dp),
+                        onClick = onNavigateBack
+                    ) {
                         Icon(
                             painter = if (focused) painterResource(id = R.drawable.ic_arrow_left) else painterResource(
                                 R.drawable.ic_search
@@ -114,7 +124,12 @@ fun ShopAppSearch(
                 )
             },
         )
-        AnimatedVisibility(visible = focused) {
+        AnimatedVisibility(
+            visible = focused,
+            enter = slideInVertically(
+                animationSpec = spring(stiffness = 400f)
+            ){ it },
+        ) {
             content()
         }
 

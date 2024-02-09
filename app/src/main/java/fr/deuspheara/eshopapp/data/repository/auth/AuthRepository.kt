@@ -2,6 +2,7 @@ package fr.deuspheara.eshopapp.data.repository.auth
 
 import fr.deuspheara.eshopapp.core.model.auth.Password
 import fr.deuspheara.eshopapp.core.model.auth.TokenResponse
+import fr.deuspheara.eshopapp.core.model.auth.UserFullModel
 import fr.deuspheara.eshopapp.core.model.auth.Username
 
 /**
@@ -65,4 +66,11 @@ interface AuthRepository {
         firstName: String?,
         lastName: String?
     ): TokenResponse
+
+    /**
+     * Get user
+     *
+     * @return [UserFullModel]
+     */
+    suspend fun getUser(): UserFullModel
 }

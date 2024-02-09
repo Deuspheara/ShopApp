@@ -63,6 +63,12 @@ sealed class ShopAppDestination(
         override val route: String = Destinations.AUTH
     }
 
+    data object ProfilDestination : ShopAppDestination(
+        title = R.string.profil_title,
+    ) {
+        override val route: String = Destinations.PROFIL
+    }
+
     data object InformationDestination : ShopAppDestination(
         title = R.string.information_title,
     ) {
@@ -117,6 +123,7 @@ sealed class ShopAppDestination(
 }
 
 object Destinations {
+    const val PROFIL = "profil"
     const val INFORMATION = "information"
     const val MAIN = "main"
     const val HOME = "home"

@@ -1,7 +1,6 @@
 package fr.deuspheara.eshopapp.ui.navigation.graph
 
 import androidx.compose.material3.SnackbarHostState
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.navigation
@@ -11,6 +10,7 @@ import fr.deuspheara.eshopapp.ui.navigation.ShopAppRoutable.Companion.navigate
 import fr.deuspheara.eshopapp.ui.screens.cart.CartScreen
 import fr.deuspheara.eshopapp.ui.screens.home.HomeScreen
 import fr.deuspheara.eshopapp.ui.screens.product.detail.ProductDetailScreen
+import fr.deuspheara.eshopapp.ui.screens.profil.ProfilScreen
 
 /**
  * _Eshopapp_
@@ -37,7 +37,6 @@ fun NavGraphBuilder.addMainNavGraph(
         composable(ShopAppDestination.HomeDestination) {
 
             HomeScreen(
-                viewModel = hiltViewModel(),
                 onNavigateToDetailedProduct = { productId ->
                     navController.navigate(ShopAppDestination.ProductDetailDestination(productId))
                 },
@@ -47,11 +46,13 @@ fun NavGraphBuilder.addMainNavGraph(
                 onNavigateToCart = {
                     navController.navigate(ShopAppDestination.CartDestination)
                 },
+                onNavigateToProfile = {
+                    navController.navigate(ShopAppDestination.ProfilDestination)
+                },
             )
         }
         composable(ShopAppDestination.ProductDetailDestination) {
             ProductDetailScreen(
-                viewModel = hiltViewModel(),
                 onNavigateBack = {
                     navController.navigateUp()
                 },
@@ -60,7 +61,14 @@ fun NavGraphBuilder.addMainNavGraph(
 
         composable(ShopAppDestination.CartDestination) {
             CartScreen(
-                viewModel = hiltViewModel(),
+                onNavigateBack = {
+                    navController.navigateUp()
+                }
+            )
+        }
+
+        composable(ShopAppDestination.ProfilDestination) {
+            ProfilScreen(
                 onNavigateBack = {
                     navController.navigateUp()
                 }

@@ -60,7 +60,7 @@ val Typography = Typography(
     ),
     titleMedium = TextStyle(
         fontFamily = Nunito,
-        fontWeight = FontWeight.W600,
+        fontWeight = FontWeight.W300,
         fontSize = 16.sp,
         lineHeight = 20.sp,
     ),

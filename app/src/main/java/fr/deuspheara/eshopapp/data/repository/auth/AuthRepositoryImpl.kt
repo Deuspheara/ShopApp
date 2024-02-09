@@ -2,6 +2,7 @@ package fr.deuspheara.eshopapp.data.repository.auth
 
 import fr.deuspheara.eshopapp.core.model.auth.Password
 import fr.deuspheara.eshopapp.core.model.auth.TokenResponse
+import fr.deuspheara.eshopapp.core.model.auth.UserFullModel
 import fr.deuspheara.eshopapp.core.model.auth.Username
 import fr.deuspheara.eshopapp.data.datasource.auth.remote.AuthDataSource
 import javax.inject.Inject
@@ -54,5 +55,9 @@ class AuthRepositoryImpl @Inject constructor(
             firstName,
             lastName
         )
+    }
+
+    override suspend fun getUser(): UserFullModel {
+        return authDataSource.getUser().let(::UserFullModel)
     }
 }
