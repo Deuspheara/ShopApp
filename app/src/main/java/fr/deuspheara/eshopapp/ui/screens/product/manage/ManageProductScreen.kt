@@ -138,7 +138,7 @@ fun ManageProductScreen(
                     value = "",
                     onValueChange = {}
                 )
-                //Add specification(name, description)
+
                Row(
                    modifier = Modifier.fillMaxWidth(),
                    verticalAlignment = Alignment.CenterVertically,

@@ -3,7 +3,9 @@ package fr.deuspheara.eshopapp.ui.components.text
 import androidx.annotation.StringRes
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -62,6 +64,18 @@ fun InputField(
         trailingIcon = trailingIcon,
         singleLine = maxLines == 1,
         supportingText = supportingText,
+        shape = MaterialTheme.shapes.medium,
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedBorderColor = MaterialTheme.colorScheme.primary,
+            unfocusedBorderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
+            errorBorderColor = MaterialTheme.colorScheme.error,
+            focusedTextColor = MaterialTheme.colorScheme.onSurface,
+            unfocusedTextColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.60f),
+            errorTextColor = MaterialTheme.colorScheme.error,
+            focusedLabelColor = MaterialTheme.colorScheme.primary,
+            unfocusedLabelColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.60f),
+            errorLabelColor = MaterialTheme.colorScheme.error
+        )
     )
 }
 
