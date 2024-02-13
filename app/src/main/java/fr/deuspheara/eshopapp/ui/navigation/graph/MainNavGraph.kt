@@ -10,6 +10,7 @@ import fr.deuspheara.eshopapp.ui.navigation.ShopAppRoutable.Companion.navigate
 import fr.deuspheara.eshopapp.ui.screens.cart.CartScreen
 import fr.deuspheara.eshopapp.ui.screens.home.HomeScreen
 import fr.deuspheara.eshopapp.ui.screens.product.detail.ProductDetailScreen
+import fr.deuspheara.eshopapp.ui.screens.product.manage.ManageProductScreen
 import fr.deuspheara.eshopapp.ui.screens.profil.ProfilScreen
 
 /**
@@ -69,6 +70,17 @@ fun NavGraphBuilder.addMainNavGraph(
 
         composable(ShopAppDestination.ProfilDestination) {
             ProfilScreen(
+                onNavigateBack = {
+                    navController.navigateUp()
+                },
+                onNavigateToManageProduct = {
+                    navController.navigate(ShopAppDestination.ManageProductDestination)
+                }
+            )
+        }
+
+        composable(ShopAppDestination.ManageProductDestination) {
+            ManageProductScreen(
                 onNavigateBack = {
                     navController.navigateUp()
                 }

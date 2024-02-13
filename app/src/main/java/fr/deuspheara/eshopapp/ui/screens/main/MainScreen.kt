@@ -1,5 +1,6 @@
 package fr.deuspheara.eshopapp.ui.screens.main
 
+import android.annotation.SuppressLint
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -22,12 +23,12 @@ import fr.deuspheara.eshopapp.ui.navigation.graph.addMainNavGraph
  * Main screen
  *
  */
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MainScreen(
     navController: NavHostController = rememberNavController(),
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
-
 
     NavHost(
         navController = navController,
@@ -44,4 +45,5 @@ fun MainScreen(
             navController = navController,
         )
     }
+
 }

@@ -40,4 +40,26 @@
     <string name="profil_title">Profil</string>
     <string name="logout">Logout</string>
     <string name="edit">Edit</string>
+    <string name="edit_subtitle">Email, address, city, country…</string>
+    <string name="create_product">Create product</string>
+    <string name="order_subtitle">Add product to your listing</string>
+    <string name="manage_products">Manage products</string>
+    <string name="manage_products_subtitle">Add, modify, view your products…</string>
+    <string name="my_purchases">My purchases</string>
+    <string name="my_purchases_subtitle">Purchases, orders, invoices…</string>
+    <string name="parameter">Parameter</string>
+    <string name="parameter_subtitle">Notification, language, theme…</string>
+    <string name="manage_product_title">Manage products</string>
+    <string name="add_product">Create New Listing</string>
+    <string name="product_name">Product name</string>
+    <string name="product_price">Price</string>
+    <string name="product_description">Description</string>
+    <string name="product_brand">Brand</string>
+    <string name="add_photo">Add Photos</string>
+    <string name="product_stock_quantity">Stock quantity</string>
+    <string name="name">Name</string>
+    <string name="description">Description</string>
+    <string name="specifications">Specifications</string>
+    <string name="cd_add">Icon add</string>
+    <string name="product_category">Category</string>
 </resources>

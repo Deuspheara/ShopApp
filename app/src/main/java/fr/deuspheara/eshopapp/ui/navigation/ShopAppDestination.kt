@@ -1,5 +1,6 @@
 package fr.deuspheara.eshopapp.ui.navigation
 
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.runtime.Composable
@@ -32,11 +33,33 @@ import fr.deuspheara.eshopapp.R
 sealed class ShopAppDestination(
     @StringRes val title: Int,
     val showTopAppBar: Boolean = true,
-    val navigationIcon: Int? = null,
+    @DrawableRes val navigationIcon: Int? = null,
     val arguments: List<NamedNavArgument> = emptyList(),
     val deepLinks: List<NavDeepLink> = emptyList(),
 ) : ShopAppRoutable {
     companion object {
+
+        val BottomBarItems = listOf(
+            HomeDestination,
+            CartDestination,
+            ProfilDestination,
+        )
+
+        fun getByRoute(route: String): ShopAppDestination? {
+            return when {
+                route.startsWith(ProductDetailDestination.ROUTING_PREFIX) -> ProductDetailDestination
+                route == MainDestination.route -> MainDestination
+                route == AuthDestination.route -> AuthDestination
+                route == ProfilDestination.route -> ProfilDestination
+                route == InformationDestination.route -> InformationDestination
+                route == HomeDestination.route -> HomeDestination
+                route == SignUpDestination.route -> SignUpDestination
+                route == SignInDestination.route -> SignInDestination
+                route == CartDestination.route -> CartDestination
+                else -> null
+            }
+        }
+
         fun NavGraphBuilder.composable(
             destination: ShopAppDestination,
             content: @Composable AnimatedVisibilityScope.(NavBackStackEntry) -> Unit,
@@ -57,6 +80,12 @@ sealed class ShopAppDestination(
         override val route: String = Destinations.MAIN
     }
 
+    data object ManageProductDestination : ShopAppDestination(
+        title = R.string.manage_product_title,
+    ) {
+        override val route: String = Destinations.MANAGE_PRODUCT
+    }
+
     data object AuthDestination : ShopAppDestination(
         title = R.string.auth_title,
     ) {
@@ -65,6 +94,7 @@ sealed class ShopAppDestination(
 
     data object ProfilDestination : ShopAppDestination(
         title = R.string.profil_title,
+        navigationIcon = R.drawable.ic_user,
     ) {
         override val route: String = Destinations.PROFIL
     }
@@ -77,6 +107,7 @@ sealed class ShopAppDestination(
 
     data object HomeDestination : ShopAppDestination(
         title = R.string.home_title,
+        navigationIcon = R.drawable.ic_home,
     ) {
         override val route: String = Destinations.HOME
     }
@@ -117,12 +148,14 @@ sealed class ShopAppDestination(
 
     data object CartDestination : ShopAppDestination(
         title = R.string.cart,
+        navigationIcon = R.drawable.ic_cart,
     ) {
         override val route: String = Destinations.CART
     }
 }
 
 object Destinations {
+    const val MANAGE_PRODUCT = "manage_product"
     const val PROFIL = "profil"
     const val INFORMATION = "information"
     const val MAIN = "main"

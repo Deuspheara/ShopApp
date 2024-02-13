@@ -1,7 +1,6 @@
 package fr.deuspheara.eshopapp.ui.components.text
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
@@ -13,7 +12,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import fr.deuspheara.eshopapp.R
 
 /**
@@ -49,7 +47,6 @@ fun InputField(
 ) {
     OutlinedTextField(
         modifier = modifier
-            .padding(vertical = 8.dp)
             .onFocusChanged {
                 onPasswordFocusChanged(it.isFocused)
             },

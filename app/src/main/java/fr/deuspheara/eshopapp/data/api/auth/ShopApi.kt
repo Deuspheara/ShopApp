@@ -1,9 +1,12 @@
 package fr.deuspheara.eshopapp.data.api.auth
 
+import fr.deuspheara.eshopapp.core.model.products.ProductRequest
 import fr.deuspheara.eshopapp.data.network.model.ResponseContainer
 import fr.deuspheara.eshopapp.data.network.model.shop.ProductRemote
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.Query
 
 /**
@@ -35,4 +38,12 @@ interface ShopApi {
 
     @GET("categories")
     suspend fun getCategories(): Response<ResponseContainer<String>>
+
+    @GET("products/add")
+    suspend fun createProduct(
+        @Header("Authorization")
+        token: String,
+        @Body
+        product: ProductRequest
+    ): Response<ProductRemote>
 }

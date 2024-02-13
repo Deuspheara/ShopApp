@@ -33,7 +33,7 @@ import fr.deuspheara.eshopapp.core.model.products.Price
 import fr.deuspheara.eshopapp.core.model.products.ProductCartModel
 import fr.deuspheara.eshopapp.core.model.products.Quantity
 import fr.deuspheara.eshopapp.ui.components.bar.top.ShopAppCenteredTopBar
-import fr.deuspheara.eshopapp.ui.components.shop.card.CartShopCard
+import fr.deuspheara.eshopapp.ui.components.card.CartShopCard
 import fr.deuspheara.eshopapp.ui.navigation.ShopAppDestination
 import java.text.DecimalFormat
 import java.util.Currency

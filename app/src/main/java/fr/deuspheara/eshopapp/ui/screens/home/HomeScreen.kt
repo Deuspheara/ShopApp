@@ -53,12 +53,12 @@ import fr.deuspheara.eshopapp.core.model.products.Description
 import fr.deuspheara.eshopapp.core.model.products.ImageUrl
 import fr.deuspheara.eshopapp.core.model.products.Name
 import fr.deuspheara.eshopapp.core.model.products.Price
+import fr.deuspheara.eshopapp.ui.components.ShopSection
 import fr.deuspheara.eshopapp.ui.components.bar.search.ShopAppSearch
 import fr.deuspheara.eshopapp.ui.components.bar.top.ShopAppCenteredTopBar
-import fr.deuspheara.eshopapp.ui.components.shop.card.LargeShopCard
-import fr.deuspheara.eshopapp.ui.components.shop.card.ListShopCard
-import fr.deuspheara.eshopapp.ui.components.shop.card.SmallShopCard
-import fr.deuspheara.eshopapp.ui.components.shop.section.ShopSection
+import fr.deuspheara.eshopapp.ui.components.card.LargeShopCard
+import fr.deuspheara.eshopapp.ui.components.card.ListShopCard
+import fr.deuspheara.eshopapp.ui.components.card.SmallShopCard
 import fr.deuspheara.eshopapp.ui.navigation.ShopAppDestination
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -118,6 +118,8 @@ fun HomeScreen(
 
     val focusManager = LocalFocusManager.current
 
+
+
     Scaffold(
         topBar = {
             Column {
@@ -168,7 +170,7 @@ fun HomeScreen(
             }
 
 
-        }
+        },
     ) { innerPadding ->
 
         Column(
@@ -211,89 +213,91 @@ fun HomeScreen(
                     }
                 }
             }
-           AnimatedVisibility(
-               visible = !isSearchBarFocused,
-               enter = slideInVertically { it },
-           ) {
-               Column(
-                   modifier = Modifier
-                       .nestedScroll(scrollBehavior.nestedScrollConnection)
-                       .verticalScroll(rememberScrollState())
-                       .padding(top = 16.dp),
-                   verticalArrangement = Arrangement.Top
-               ) {
-                   LazyRow {
-                       items(categories) { category ->
-                           TextButton(
-                               modifier = Modifier
-                                   .padding(start = 16.dp),
-                               onClick = {},
-                               shape = RoundedCornerShape(32.dp),
-                               colors = ButtonDefaults.buttonColors(
-                                   contentColor = MaterialTheme.colorScheme.onSurface,
-                                   containerColor = MaterialTheme.colorScheme.surfaceVariant,
-                                   disabledContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-                                   disabledContentColor = MaterialTheme.colorScheme.onSurface,
-                               ),
-                           ) {
-                               Text(text = category.value)
-                           }
-                       }
-                   }
-                   ShopSection(
-                       title = R.string.continue_shopping,
-                       onClick = {},
-                   )
-                   LazyRow {
+            AnimatedVisibility(
+                visible = !isSearchBarFocused,
+                enter = slideInVertically { it },
+            ) {
+                Column(
+                    modifier = Modifier
+                        .nestedScroll(scrollBehavior.nestedScrollConnection)
+                        .verticalScroll(rememberScrollState())
+                        .padding(top = 16.dp),
+                    verticalArrangement = Arrangement.Top
+                ) {
+                    LazyRow {
+                        items(categories) { category ->
+                            TextButton(
+                                modifier = Modifier
+                                    .padding(start = 16.dp),
+                                onClick = {},
+                                shape = RoundedCornerShape(32.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    contentColor = MaterialTheme.colorScheme.onSurface,
+                                    containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                                    disabledContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                                    disabledContentColor = MaterialTheme.colorScheme.onSurface,
+                                ),
+                            ) {
+                                Text(text = category.value)
+                            }
+                        }
+                    }
+                    recentLocalProducts.itemCount.takeIf { it > 0 }?.run {
+                       ShopSection(
+                           title = R.string.continue_shopping
+                       )
 
-                       items(
-                           count = recentLocalProducts.itemCount,
-                           key = recentLocalProducts.itemKey { it.id },
-                           contentType = recentLocalProducts.itemContentType { it },
-                       ) { index ->
-                           recentLocalProducts[index]?.let { product ->
-                               SmallShopCard(
-                                   modifier = Modifier
-                                       .padding(start = 16.dp),
-                                   name = Name(product.name ?: ""),
-                                   description = Description(product.description ?: ""),
-                                   urlImage = ImageUrl(product.images?.first() ?: ""),
-                                   onClick = {
-                                       onNavigateToDetailedProduct(product.id)
-                                   },
-                                   onFavoriteClick = {},
-                                   price = Price(product.price ?: 0.0, "USD"),
-                                   promotion = product.promotionPrice?.let { Price(it, "USD") }
-                               )
-                           }
-                       }
+                    }
+                    LazyRow {
 
-                   }
+                        items(
+                            count = recentLocalProducts.itemCount,
+                            key = recentLocalProducts.itemKey { it.id },
+                            contentType = recentLocalProducts.itemContentType { it },
+                        ) { index ->
+                            recentLocalProducts[index]?.let { product ->
+                                SmallShopCard(
+                                    modifier = Modifier
+                                        .padding(start = 16.dp),
+                                    name = Name(product.name ?: ""),
+                                    description = Description(product.description ?: ""),
+                                    urlImage = ImageUrl(product.images?.first() ?: ""),
+                                    onClick = {
+                                        onNavigateToDetailedProduct(product.id)
+                                    },
+                                    onFavoriteClick = {},
+                                    price = Price(product.price ?: 0.0, "USD"),
+                                    promotion = product.promotionPrice?.let { Price(it, "USD") }
+                                )
+                            }
+                        }
 
-                   ShopSection(
-                       title = R.string.category_computer,
-                       onClick = {},
-                   )
+                    }
 
-                   HorizontalPager(
-                       state = pagerState,
-                       key = lazyPagingItems.itemKey { it.id },
-                   ) { index ->
-                       lazyPagingItems[index]?.let { product ->
-                           LargeShopCard(
-                               imageUrl = ImageUrl(product.images?.first() ?: ""),
-                               name = Name(product.name ?: ""),
-                               description = Description(product.description ?: ""),
-                               price = Price(product.price ?: 0.0, "USD"),
-                               promotion = product.promotionPrice?.let { Price(it, "USD") },
-                               onClick = {
-                                   onNavigateToDetailedProduct(product.id)
-                               },
-                           )
-                       }
-                   }
-               }
-           }
+                    ShopSection(
+                        title = R.string.category_computer,
+                        onClick = {},
+                    )
+
+                    HorizontalPager(
+                        state = pagerState,
+                        key = lazyPagingItems.itemKey { it.id },
+                    ) { index ->
+                        lazyPagingItems[index]?.let { product ->
+                            LargeShopCard(
+                                imageUrl = ImageUrl(product.images?.first() ?: ""),
+                                name = Name(product.name ?: ""),
+                                description = Description(product.description ?: ""),
+                                price = Price(product.price ?: 0.0, "USD"),
+                                promotion = product.promotionPrice?.let { Price(it, "USD") },
+                                onClick = {
+                                    onNavigateToDetailedProduct(product.id)
+                                },
+                            )
+                        }
+                    }
+                }
+            }
         }
     }
 }

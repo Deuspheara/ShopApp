@@ -1,4 +1,4 @@
-package fr.deuspheara.eshopapp.ui.components.shop.card
+package fr.deuspheara.eshopapp.ui.components.card
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

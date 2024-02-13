@@ -1,4 +1,4 @@
-package fr.deuspheara.eshopapp.ui.components
+package fr.deuspheara.eshopapp.ui.components.card
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background

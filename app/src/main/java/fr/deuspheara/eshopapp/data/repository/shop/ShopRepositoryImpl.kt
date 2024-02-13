@@ -1,6 +1,7 @@
 package fr.deuspheara.eshopapp.data.repository.shop
 
 import android.util.Log
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -23,6 +24,7 @@ import fr.deuspheara.eshopapp.core.model.products.Rating
 import fr.deuspheara.eshopapp.core.model.products.ReviewsCount
 import fr.deuspheara.eshopapp.core.model.products.StockQuantity
 import fr.deuspheara.eshopapp.data.database.model.ProductWithSpecifications
+import fr.deuspheara.eshopapp.data.datasource.auth.remote.AuthDataSource
 import fr.deuspheara.eshopapp.data.datasource.shop.local.ShopLocalDataSource
 import fr.deuspheara.eshopapp.data.datasource.shop.remote.ProductResponse
 import fr.deuspheara.eshopapp.data.datasource.shop.remote.ShopDataSource
@@ -48,11 +50,13 @@ import javax.inject.Inject
 class ShopRepositoryImpl @Inject constructor(
     private val shopDataSource: ShopDataSource,
     private val shopLocalDataSource: ShopLocalDataSource,
+    private val authDataSource: AuthDataSource,
     @DispatcherModule.DispatcherDefault private val defaultDispatcher: CoroutineDispatcher
 ) : ShopRepository {
 
     private companion object {
         private const val TAG = "ShopRepositoryImpl"
+        val TOKEN = stringPreferencesKey("token")
     }
 
     override fun getProducts(
@@ -146,6 +150,43 @@ class ShopRepositoryImpl @Inject constructor(
 
     override suspend fun getOrderDetail(orderId :String) {
         TODO("Not yet implemented")
+    }
+
+    override suspend fun createProduct(
+        name: String,
+        author: String,
+        price: Double,
+        promotionPrice: Double,
+        description: String,
+        currency: String,
+        brand: String,
+        category: String,
+        availability: Boolean,
+        stockQuantity: Int,
+        images: List<String>,
+        specifications: List<Specification>,
+        rating: Double,
+        reviewsCount: Int
+    ) : ProductLightModel {
+        val token = authDataSource.loadData(TOKEN, "")
+
+        return shopDataSource.createProduct(
+            token = token,
+            name = name,
+            author = author,
+            price = price,
+            promotionPrice = promotionPrice,
+            description = description,
+            currency = currency,
+            brand = brand,
+            category = category,
+            availability = availability,
+            stockQuantity = stockQuantity,
+            images = images,
+            specifications = specifications,
+            rating = rating,
+            reviewsCount = reviewsCount
+        ).let(::ProductLightModel)
     }
 
 

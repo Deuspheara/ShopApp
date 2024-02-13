@@ -1,4 +1,4 @@
-package fr.deuspheara.eshopapp.ui.components.shop.card
+package fr.deuspheara.eshopapp.ui.components.card
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

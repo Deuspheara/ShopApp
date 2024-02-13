@@ -1,9 +1,11 @@
 package fr.deuspheara.eshopapp.data.datasource.auth.remote
 
+import androidx.datastore.preferences.core.Preferences
 import fr.deuspheara.eshopapp.core.model.auth.Password
 import fr.deuspheara.eshopapp.core.model.auth.TokenResponse
 import fr.deuspheara.eshopapp.core.model.auth.Username
 import fr.deuspheara.eshopapp.data.network.model.auth.UserRemote
+import java.time.Instant
 
 /**
  * _Eshopapp_
@@ -42,7 +44,7 @@ interface AuthDataSource {
      *
      * @return [Boolean] true if authenticated, false otherwise
      */
-    suspend fun authenticate(): Boolean
+    suspend fun authenticate(token: String): Boolean
 
     /**
      * Update user
@@ -58,6 +60,7 @@ interface AuthDataSource {
      * @return [TokenResponse] the new token
      */
     suspend fun updateUser(
+        token: String,
         email: String? = null,
         zipCode: String? = null,
         address: String? = null,
@@ -73,5 +76,7 @@ interface AuthDataSource {
      *
      * @return [UserRemote] the user
      */
-    suspend fun getUser(): UserRemote
+    suspend fun getUser(token: String): UserRemote
+    suspend fun <T> loadData(key: Preferences.Key<T>, defaultValue: T): T
+    suspend fun <T> editData(key: Preferences.Key<T>, value: T): Instant?
 }

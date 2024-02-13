@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
 import fr.deuspheara.eshopapp.core.coroutines.DispatcherModule
 import fr.deuspheara.eshopapp.core.model.auth.AuthRequest
 import fr.deuspheara.eshopapp.core.model.auth.Password
@@ -42,7 +41,7 @@ class AuthDataSourceImpl @Inject constructor(
 
     private companion object {
         private const val TAG = "AuthDataSourceImpl"
-        val TOKEN = stringPreferencesKey("token")
+
     }
 
     override suspend fun signIn(username: Username, password: Password): TokenResponse {
@@ -55,9 +54,6 @@ class AuthDataSourceImpl @Inject constructor(
                     )
                 )
             }.safeUnwrap()
-            .also {
-                editData(TOKEN, it.token)
-            }
         }
     }
 
@@ -72,16 +68,13 @@ class AuthDataSourceImpl @Inject constructor(
                 )
             }
             .safeUnwrap()
-            .also {
-                editData(TOKEN, it.token)
-            }
         }
     }
 
-    override suspend fun authenticate(): Boolean {
+    override suspend fun authenticate(token: String): Boolean {
         return withContext(ioDispatcher) {
-            val tokenValue = loadData(TOKEN, "")
-            val formattedToken = "Bearer $tokenValue"
+
+            val formattedToken = "Bearer ${token}"
 
             apiCall {
                 authApi.authenticate(formattedToken)
@@ -90,6 +83,7 @@ class AuthDataSourceImpl @Inject constructor(
     }
 
     override suspend fun updateUser(
+        token: String,
         email: String?,
         zipCode: String?,
         address: String?,
@@ -99,11 +93,10 @@ class AuthDataSourceImpl @Inject constructor(
         lastName: String?
     ): TokenResponse {
         return withContext(ioDispatcher) {
-            val tokenValue = loadData(TOKEN, "")
 
             apiCall {
                 authApi.updateUser(
-                    "Bearer $tokenValue",
+                    "Bearer $token",
                     email,
                     lastName,
                     firstName,
@@ -116,17 +109,15 @@ class AuthDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getUser(): UserRemote {
+    override suspend fun getUser(token: String): UserRemote {
         return withContext(ioDispatcher) {
-            val tokenValue = loadData(TOKEN, "")
-
             apiCall {
-                authApi.getUser("Bearer $tokenValue")
+                authApi.getUser("Bearer $token")
             }.safeUnwrap()
         }
     }
 
-    private suspend fun <T> loadData(key: Preferences.Key<T>, defaultValue: T): T {
+    override suspend fun <T> loadData(key: Preferences.Key<T>, defaultValue: T): T {
         return withContext(ioDispatcher) {
             try {
                 dataStore.data.map { preferences ->
@@ -139,7 +130,7 @@ class AuthDataSourceImpl @Inject constructor(
         }
     }
 
-    private suspend fun <T> editData(key: Preferences.Key<T>, value: T): Instant? {
+    override suspend fun <T> editData(key: Preferences.Key<T>, value: T): Instant? {
         return withContext(ioDispatcher) {
             try {
                 dataStore.edit { preferences ->

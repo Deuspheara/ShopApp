@@ -4,11 +4,13 @@ import android.util.Log
 import androidx.paging.PagingSource
 import com.google.gson.Gson
 import fr.deuspheara.eshopapp.core.coroutines.DispatcherModule
+import fr.deuspheara.eshopapp.core.model.products.ProductRequest
 import fr.deuspheara.eshopapp.data.api.auth.ShopApi
 import fr.deuspheara.eshopapp.data.network.NetworkModule.apiCall
 import fr.deuspheara.eshopapp.data.network.NetworkModule.safeUnwrap
 import fr.deuspheara.eshopapp.data.network.model.ResponseContainer
 import fr.deuspheara.eshopapp.data.network.model.shop.ProductRemote
+import fr.deuspheara.eshopapp.data.network.model.shop.Specification
 import fr.deuspheara.eshopapp.data.network.paging.ApiPagingSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -115,5 +117,48 @@ class ShopDataSourceImpl @Inject constructor(
 
     override suspend fun getOrderDetail(orderId: String) {
         TODO("Not yet implemented")
+    }
+
+    override suspend fun createProduct(
+        token: String,
+        name: String,
+        author: String,
+        price: Double,
+        promotionPrice: Double,
+        description: String,
+        currency: String,
+        brand: String,
+        category: String,
+        availability: Boolean,
+        stockQuantity: Int,
+        images: List<String>,
+        specifications: List<Specification>,
+        rating: Double,
+        reviewsCount: Int
+    ): ProductRemote {
+        return withContext(ioDispatcher){
+            apiCall {
+                shopApi.createProduct(
+                    token = token,
+                    product = ProductRequest(
+                        name = name,
+                        author = author,
+                        price = price,
+                        promotionPrice = promotionPrice,
+                        description = description,
+                        currency = currency,
+                        brand = brand,
+                        category = category,
+                        availability = availability,
+                        stockQuantity = stockQuantity,
+                        images = images,
+                        specifications = specifications,
+                        rating = rating,
+                        reviewsCount = reviewsCount
+                    )
+                )
+
+            }.safeUnwrap()
+        }
     }
 }

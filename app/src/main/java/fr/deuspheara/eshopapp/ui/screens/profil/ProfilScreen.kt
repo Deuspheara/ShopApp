@@ -1,8 +1,12 @@
 package fr.deuspheara.eshopapp.ui.screens.profil
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
@@ -14,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -23,9 +28,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import fr.deuspheara.eshopapp.R
 import fr.deuspheara.eshopapp.core.model.auth.UserFullModel
-import fr.deuspheara.eshopapp.ui.components.InformationItem
 import fr.deuspheara.eshopapp.ui.components.bar.top.ShopAppCenteredTopBar
-import fr.deuspheara.eshopapp.ui.components.button.ActionButton
+import fr.deuspheara.eshopapp.ui.components.card.CardButton
+import fr.deuspheara.eshopapp.ui.components.card.InformationItem
 import fr.deuspheara.eshopapp.ui.navigation.ShopAppDestination
 
 /**
@@ -44,7 +49,8 @@ import fr.deuspheara.eshopapp.ui.navigation.ShopAppDestination
 fun ProfilScreen(
     modifier: Modifier = Modifier,
     viewModel: ProfileViewModel = hiltViewModel(),
-    onNavigateBack: () -> Unit
+    onNavigateBack: () -> Unit,
+    onNavigateToManageProduct: () -> Unit
 ) {
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -67,8 +73,8 @@ fun ProfilScreen(
                     IconButton(onClick = { }) {
                         Icon(
                             modifier = Modifier.size(24.dp),
-                            imageVector = ImageVector.vectorResource(id = R.drawable.ic_edit),
-                            contentDescription = stringResource(id = R.string.edit)
+                            imageVector = ImageVector.vectorResource(id = R.drawable.ic_logout),
+                            contentDescription = stringResource(id = R.string.logout)
                         )
                     }
                 }
@@ -78,7 +84,8 @@ fun ProfilScreen(
         ProfileScreenContent(
             modifier = modifier
                 .padding(innerPadding),
-            userFullModel = (uiState as? ProfileUiState.Success)?.user
+            userFullModel = (uiState as? ProfileUiState.Success)?.user,
+            onNavigateToManageProduct = onNavigateToManageProduct
         )
     }
 }
@@ -86,7 +93,8 @@ fun ProfilScreen(
 @Composable
 fun ProfileScreenContent(
     modifier: Modifier = Modifier,
-    userFullModel: UserFullModel?
+    userFullModel: UserFullModel? = null,
+    onNavigateToManageProduct: () -> Unit = {}
 ) {
     Column(
         modifier = modifier
@@ -140,13 +148,68 @@ fun ProfileScreenContent(
                     title = country,
                 )
             }
-            ActionButton(
-                modifier = Modifier.padding(16.dp),
-                text = R.string.logout,
-                onClick = { },
-                isLoading = false,
-                leadingIcon = R.drawable.ic_logout
-            )
+            LazyVerticalGrid(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .height(504.dp),
+                columns = GridCells.Fixed(2),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+               item {
+                    CardButton(
+                        icon = R.drawable.ic_edit,
+                        title = R.string.edit,
+                        subtitle = R.string.edit_subtitle,
+                        onClick = {
+                            //navigate to edit screen
+                        },
+                        color = Color.Blue.copy(alpha = 0.2f)
+                    )
+                }
+
+                item {
+                    CardButton(
+                        icon = R.drawable.ic_product,
+                        title = R.string.manage_products,
+                        subtitle = R.string.manage_products_subtitle,
+                        onClick = onNavigateToManageProduct,
+                        color = Color.Green.copy(alpha = 0.2f)
+                    )
+                }
+
+                item {
+                    CardButton(
+                        icon = R.drawable.ic_cart,
+                        title = R.string.my_purchases,
+                        subtitle = R.string.my_purchases_subtitle,
+                        onClick = {
+                            //navigate to edit screen
+                        },
+                        color = Color.Yellow.copy(alpha = 0.2f)
+                    )
+                }
+
+                item {
+                    CardButton(
+                        icon = R.drawable.ic_parameter,
+                        title = R.string.parameter,
+                        subtitle = R.string.parameter_subtitle,
+                        onClick = {
+                            //navigate to orders screen
+                        },
+                        color = Color.Red.copy(alpha = 0.2f)
+                    )
+                }
+            }
+
+//            ActionButton(
+//                modifier = Modifier.padding(16.dp),
+//                text = R.string.logout,
+//                onClick = { },
+//                isLoading = false,
+//                leadingIcon = R.drawable.ic_logout
+//            )
         }
 
     }
@@ -155,7 +218,5 @@ fun ProfileScreenContent(
 @Composable
 @Preview(showBackground = true)
 fun ProfilScreenPreview() {
-    ProfilScreen(
-        onNavigateBack = {}
-    )
+    ProfileScreenContent()
 }

@@ -1,4 +1,4 @@
-package fr.deuspheara.eshopapp.ui.components.shop.card
+package fr.deuspheara.eshopapp.ui.components.card
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -92,7 +92,7 @@ fun SmallShopCard(
                 Text(
                     text = name.value,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.bodyLarge,
                 )
                 Text(
                     text = description.value,

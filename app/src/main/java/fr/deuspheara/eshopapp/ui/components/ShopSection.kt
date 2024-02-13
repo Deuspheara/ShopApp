@@ -1,4 +1,4 @@
-package fr.deuspheara.eshopapp.ui.components.shop.section
+package fr.deuspheara.eshopapp.ui.components
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes

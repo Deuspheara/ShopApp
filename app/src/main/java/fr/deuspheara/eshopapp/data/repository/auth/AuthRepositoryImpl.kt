@@ -1,5 +1,6 @@
 package fr.deuspheara.eshopapp.data.repository.auth
 
+import androidx.datastore.preferences.core.stringPreferencesKey
 import fr.deuspheara.eshopapp.core.model.auth.Password
 import fr.deuspheara.eshopapp.core.model.auth.TokenResponse
 import fr.deuspheara.eshopapp.core.model.auth.UserFullModel
@@ -22,19 +23,28 @@ import javax.inject.Inject
  */
 class AuthRepositoryImpl @Inject constructor(
     private val authDataSource: AuthDataSource,
+
 ) : AuthRepository {
+    private companion object {
+        private const val TAG = "AuthRepositoryImpl"
+        val TOKEN = stringPreferencesKey("token")
+    }
     override suspend fun signIn(username: Username, password: Password): TokenResponse {
-        //TODO: save token in datastore
-        return authDataSource.signIn(username, password)
+        return authDataSource.signIn(username, password).also {
+            authDataSource.editData(TOKEN, it.token)
+        }
     }
 
     override suspend fun signUp(username: Username, password: Password): TokenResponse {
-        //TODO: save token in datastore
-        return authDataSource.signUp(username, password)
+        return authDataSource.signUp(username, password).also {
+            authDataSource.editData(TOKEN, it.token)
+        }
     }
 
     override suspend fun authenticate(): Boolean {
-        return authDataSource.authenticate()
+        return authDataSource.authenticate(
+            authDataSource.loadData(TOKEN, "")
+        )
     }
 
     override suspend fun updateUser(
@@ -47,6 +57,7 @@ class AuthRepositoryImpl @Inject constructor(
         lastName: String?
     ): TokenResponse {
         return authDataSource.updateUser(
+            authDataSource.loadData(TOKEN, ""),
             email,
             zipCode,
             address,
@@ -58,6 +69,8 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getUser(): UserFullModel {
-        return authDataSource.getUser().let(::UserFullModel)
+        return authDataSource.getUser(
+            authDataSource.loadData(TOKEN, "")
+        ).let(::UserFullModel)
     }
 }
