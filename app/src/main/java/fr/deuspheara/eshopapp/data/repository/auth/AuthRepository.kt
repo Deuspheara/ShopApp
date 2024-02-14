@@ -38,7 +38,6 @@ interface AuthRepository {
 
     /**
      * Authenticate
-     * @param token token
      *
      * @return [Boolean] true if authenticated, false otherwise
      */
@@ -46,7 +45,6 @@ interface AuthRepository {
 
     /**
      * Update user
-     * @param token
      * @param email
      * @param zipCode
      * @param address
@@ -73,4 +71,9 @@ interface AuthRepository {
      * @return [UserFullModel]
      */
     suspend fun getUser(): UserFullModel
+
+    /**
+     * Sign out
+     */
+    suspend fun signOut()
 }

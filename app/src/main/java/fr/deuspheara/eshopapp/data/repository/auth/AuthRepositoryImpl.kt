@@ -73,4 +73,8 @@ class AuthRepositoryImpl @Inject constructor(
             authDataSource.loadData(TOKEN, "")
         ).let(::UserFullModel)
     }
+
+    override suspend fun signOut() {
+        authDataSource.editData(TOKEN, "")
+    }
 }

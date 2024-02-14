@@ -15,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -55,6 +56,12 @@ fun ProfilScreen(
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
+    LaunchedEffect(uiState) {
+        if(uiState is ProfileUiState.Logout) {
+            onNavigateBack()
+        }
+    }
+
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -70,7 +77,7 @@ fun ProfilScreen(
                     }
                 },
                 actions = {
-                    IconButton(onClick = { }) {
+                    IconButton(onClick = viewModel::signOut) {
                         Icon(
                             modifier = Modifier.size(24.dp),
                             imageVector = ImageVector.vectorResource(id = R.drawable.ic_logout),
@@ -85,7 +92,7 @@ fun ProfilScreen(
             modifier = modifier
                 .padding(innerPadding),
             userFullModel = (uiState as? ProfileUiState.Success)?.user,
-            onNavigateToManageProduct = onNavigateToManageProduct
+            onNavigateToManageProduct = onNavigateToManageProduct,
         )
     }
 }
@@ -94,7 +101,7 @@ fun ProfilScreen(
 fun ProfileScreenContent(
     modifier: Modifier = Modifier,
     userFullModel: UserFullModel? = null,
-    onNavigateToManageProduct: () -> Unit = {}
+    onNavigateToManageProduct: () -> Unit = {},
 ) {
     Column(
         modifier = modifier
@@ -203,13 +210,6 @@ fun ProfileScreenContent(
                 }
             }
 
-//            ActionButton(
-//                modifier = Modifier.padding(16.dp),
-//                text = R.string.logout,
-//                onClick = { },
-//                isLoading = false,
-//                leadingIcon = R.drawable.ic_logout
-//            )
         }
 
     }

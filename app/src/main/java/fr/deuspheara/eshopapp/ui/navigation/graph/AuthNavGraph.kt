@@ -55,6 +55,9 @@ fun NavGraphBuilder.addAuthNavGraph(
             InformationScreen(
                 onNavigateBack = {
                     navController.navigateUp()
+                },
+                onNavigateHome = {
+                    navController.navigate(ShopAppDestination.MainDestination)
                 }
             )
         }

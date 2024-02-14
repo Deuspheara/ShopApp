@@ -29,6 +29,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -96,6 +97,7 @@ fun HomeScreen(
     val searchText by viewModel.searchText.collectAsStateWithLifecycle()
 
     val isLoading by remember { derivedStateOf { (uiState as? HomeUiState.Loading)?.isLoading == true } }
+
     val isAuthenticated by viewModel.isAuthenticated.collectAsStateWithLifecycle()
 
     val categories by remember {
@@ -118,7 +120,11 @@ fun HomeScreen(
 
     val focusManager = LocalFocusManager.current
 
-
+    LaunchedEffect(isAuthenticated) {
+        coroutineScope.launch {
+            viewModel.authenticate()
+        }
+    }
 
     Scaffold(
         topBar = {

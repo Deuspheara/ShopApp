@@ -77,6 +77,24 @@ interface AuthDataSource {
      * @return [UserRemote] the user
      */
     suspend fun getUser(token: String): UserRemote
+
+    /**
+     * Load data
+     *
+     * @param key
+     * @param defaultValue
+     *
+     * @return [T]
+     */
     suspend fun <T> loadData(key: Preferences.Key<T>, defaultValue: T): T
+
+    /**
+     * Edit data
+     *
+     * @param key
+     * @param value
+     *
+     * @return [Instant]
+     */
     suspend fun <T> editData(key: Preferences.Key<T>, value: T): Instant?
 }

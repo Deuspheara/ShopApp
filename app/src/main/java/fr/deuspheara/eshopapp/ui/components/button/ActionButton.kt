@@ -67,7 +67,7 @@ fun ActionButton(
                 }
             }
             if (isLoading) {
-                CircularProgressIndicator(modifier = Modifier.padding(4.dp))
+                CircularProgressIndicator(modifier = Modifier.padding(horizontal = 4.dp))
             } else {
                 Text(
                     text = stringResource(id = text),

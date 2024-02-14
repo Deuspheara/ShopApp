@@ -14,6 +14,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -48,7 +49,8 @@ import fr.deuspheara.eshopapp.ui.navigation.ShopAppDestination
 @Composable
 fun InformationScreen(
     viewModel: InformationViewModel = hiltViewModel(),
-    onNavigateBack: () -> Unit
+    onNavigateBack: () -> Unit,
+    onNavigateHome: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -71,6 +73,12 @@ fun InformationScreen(
 
     (uiState as? InformationUiState.FormInputError)?.let { error ->
         Toast.makeText(LocalContext.current, error.toString(), Toast.LENGTH_SHORT).show()
+    }
+
+    LaunchedEffect(uiState) {
+        if (uiState is InformationUiState.Success) {
+            onNavigateHome()
+        }
     }
     Scaffold(
         topBar = {

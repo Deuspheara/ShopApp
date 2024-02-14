@@ -15,6 +15,8 @@ import fr.deuspheara.eshopapp.core.model.auth.UserFullModel
  *
  */
 sealed interface ProfileUiState {
+    data object Logout : ProfileUiState
+
     @JvmInline
     value class Loading(val isLoading: Boolean): ProfileUiState
     @JvmInline

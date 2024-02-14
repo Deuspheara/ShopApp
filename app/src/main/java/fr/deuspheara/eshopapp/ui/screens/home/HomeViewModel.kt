@@ -81,7 +81,7 @@ class HomeViewModel @Inject constructor(
 
 
     init {
-        authenticate()
+
         fetchCategories()
     }
 
@@ -91,7 +91,7 @@ class HomeViewModel @Inject constructor(
 
     }
 
-    private fun authenticate() = viewModelScope.launch {
+    fun authenticate() = viewModelScope.launch {
         _uiState.value = HomeUiState.Loading(true)
 
         authenticateUseCase()

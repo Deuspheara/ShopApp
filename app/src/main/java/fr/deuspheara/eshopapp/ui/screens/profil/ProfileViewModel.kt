@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import fr.deuspheara.eshopapp.core.model.auth.UserFullModel
 import fr.deuspheara.eshopapp.domain.usecases.auth.GetUserUseCase
+import fr.deuspheara.eshopapp.domain.usecases.auth.SignOutUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,7 +29,8 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val getUserUseCase: GetUserUseCase
+    private val getUserUseCase: GetUserUseCase,
+    private val signOutUseCase: SignOutUseCase
 ): ViewModel() {
     private companion object {
         const val TAG = "ProfileViewModel"
@@ -51,6 +53,12 @@ class ProfileViewModel @Inject constructor(
             }.let {
                 _uiState.emitAll(it)
             }
+    }
+
+    fun signOut() = viewModelScope.launch {
+        _uiState.value = ProfileUiState.Loading(true)
+        signOutUseCase()
+        _uiState.value = ProfileUiState.Logout
     }
 
 
